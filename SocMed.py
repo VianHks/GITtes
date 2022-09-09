@@ -15,11 +15,11 @@ db = SQLAlchemy(app)
 app.config['SQLALCHEMY_DATABASE_URI']='postgresql://postgres:jaberwar@localhost:5432/SocMed?sslmode=disable'
 
 frmtdtenow=datetime.now()
-frmtdtenow=dt_string = frmtdtenow.strftime("%d/%m/%Y %H:%M:%S")
+frmtdtenow=dt_string = frmtdtenow.strftime("%d-%m-%Y %H:%M:%S")
 
 class user(db.Model):
     usrid=db.Column(db.Integer, primary_key=True, index=True)
-    usrname=db.Column(db.String(50), nullable=False)
+    usrname=db.Column(db.String(50), nullable=False,unique=True)
     password=db.Column(db.String(50), nullable=False)
     nickname=db.Column(db.String(50), nullable=False)
     lastlogin=db.Column(db.DateTime,nullable=False)
@@ -37,8 +37,11 @@ class posting(db.Model):
     usrid=db.Column(db.Integer, db.ForeignKey('user.usrid'), nullable=False)
     postdate=db.Column(db.DateTime,nullable=False)
     isipost=db.Column(db.String(280), nullable=False)
-    likeby=db.Column(db.String(1000), nullable=True)
 
+class lkspostby(db.Model):
+    idlksby=db.Column(db.Integer, primary_key=True, index=True)
+    idposting=db.Column(db.Integer, db.ForeignKey('posting.idposting'), nullable=False)
+    likeby=db.Column(db.Integer, nullable=True)
 
 db.create_all()
 db.session.commit()
@@ -85,8 +88,7 @@ def create_posting():
     post = posting(
     usrid=data['usrid'],
     postdate=frmtdtenow,
-    isipost = data['isipost'],
-    likeby=0
+    isipost = data['isipost']
     )
     try:
         db.session.add(post)
@@ -98,6 +100,26 @@ def create_posting():
     return {
         "Message": "Posting Berhasil"
     }, 201
+#LIKE POSTING
+@app.route('/lks/', methods=['POST'])
+def likes_posting():
+    data = request.get_json()
+    lksby = lkspostby(
+    idposting=data['idposting'],
+    likeby=data['usrid']
+    )
+    
+    try:
+        db.session.add(lksby)
+        db.session.commit()
+    except:
+        return {
+            "Message": "Gagal Menyukai Postingan"
+        }, 400
+    return {
+        "Message": "Menyukai Postingan Berhasil"
+    }, 201
+    
 
 #FOLLOW A USER
 @app.route('/flwr/', methods=['POST'])
@@ -119,6 +141,61 @@ def create_flwr():
     return {
         "Message": "Mengikuti"
     }, 201
+#DELETE USER
+@app.route('/usrdlte/<id>', methods=['DELETE'])
+def dlte_usr(id):
+    try:
+        b=db.engine.execute('SELECT * FROM public.follower WHERE usrid='+str(id)+'AND apprvl=1')
+        for i in b:
+            flwr = follower.query.filter_by(idfollower=i[0]).first()
+            db.session.delete(flwr)
+            db.session.commit()
+
+        c=db.engine.execute('SELECT * FROM public.follower WHERE followerid='+str(id)+'AND apprvl=1')
+        for i in c:
+            flwing= follower.query.filter_by(idfollower=i[0]).first()
+            db.session.delete(flwing)
+            db.session.commit()
+
+        #dlte likesby dan posting per user    
+        a=db.engine.execute('SELECT a.idposting,a.usrid,b.idlksby FROM public.posting as a,public.lkspostby as b WHERE b.idposting=a.idposting AND a.usrid='+str(id)+'')
+        for i in a:
+            # return str(i[0])
+            
+            ceklksby=lkspostby.query.filter_by(idlksby=i[2]).first()
+            db.session.delete(ceklksby)
+            db.session.commit()
+    
+
+        psting = posting.query.filter_by(usrid=id).first()
+        db.session.delete(psting)
+        db.session.commit()    
+    except:
+    
+        return {
+            "Message": "Hapus User Belum Berhasil"
+        }, 500
+    return {
+        "Message": "Hapus User Berhasil"
+    }, 201
+
+#UNLIKE POSTING
+@app.route('/unlkepost/<idpost>/<id>', methods=['DELETE'])
+def unlike_psting(idpost,id):
+    
+    try:
+        lksby = lkspostby.query.filter_by(idposting=idpost).filter_by(likeby=id).first()
+        db.session.delete(lksby)
+        db.session.commit()
+    except:
+    
+        return {
+            "Message": "Gagal Unlike Post"
+        }, 500
+    return {
+        "Message": "Unlike Post Berhasil"
+    }, 201
+
 
 #UNFOLLOW USER
 @app.route('/fldlte/<id>/<fl>', methods=['DELETE'])
@@ -136,46 +213,69 @@ def dlte_flwr(id,fl):
         "Message": "Unfollow Berhasil"
     }, 201
 
+#DELETE POSTING
+@app.route('/postdel/<idpost>', methods=['DELETE'])
+def dlte_psting(idpost):
+    parsed = BasicAuth()
+    username = parsed[0]
+    password= parsed[1]
+    
+    cek=user.query.filter_by(usrname=username).first()
+    cekusrpost = posting.query.filter_by(idposting=idpost).first()
+    if str(cek.usrid)==str(cekusrpost.usrid):
+        
+        try:
+        
+            lkby = lkspostby.query.filter_by(idposting=idpost).all()
 
+            for i in lkby:
+                dlte=lkspostby.query.filter_by(idlksby=i.idlksby).first()
+                db.session.delete(dlte)
+                db.session.commit()
+    
+            psting = posting.query.filter_by(idposting=idpost).first()
+            db.session.delete(psting)
+            db.session.commit()
+        except:
+    
+            return {
+                "Message": "Gagal Hapus Postingan"
+            }, 500
+        return {
+            "Message": "Hapus Postingan Berhasil"
+        }, 201
+    else:
+        return {
+            "Message": "Silahkan Cek Username & Pass (User Tidak Sesuai)!!"
+        }
 #UPDATE DATA USER
 @app.route('/usr/<id>', methods=['PUT'])
 def update_usr(id):
-    data  = request.get_json()
-    usr = user.query.filter_by(usrid=id).first()
-    usr.password = data['password']
-    usr.nickname = data['nickname']
-
-    try:
-        db.session.commit()
-    except:
-        return {
-            "Message": "update data failed"
-        }, 400
-    return {
-        "Message": "update data success"
-    }, 201
-
-#LIKE POSTING
-@app.route('/lks/<id>', methods=['PUT'])
-def update_like(id):
-    data  = request.get_json()
-    post = posting.query.filter_by(idposting=id).first()
+    parsed = BasicAuth()
+    username = parsed[0]
+    password= parsed[1]
     
-    if post.likeby==0:
-        post.likeby = data['usrid']
+    cek=user.query.filter_by(usrname=username).first()
+    
+    if str(cek.usrid)==id:
+        data  = request.get_json()
+        usr = user.query.filter_by(usrid=id).first()
+        usr.password = data['password']
+        usr.nickname = data['nickname']
+
+        try:
+            db.session.commit()
+        except:
+            return {
+            "Message": "Update data failed"
+            }, 400
+        return {
+            "Message": "Update data success"
+        }, 201
     else:
-        post.likeby = post.likeby + ',' + data['usrid']
-
-    try:
-        db.session.commit()
-    except:
-    
-        return {
-            "Message": "Like Posting Gagal"
-        }, 400
-    return {
-        "Message": "Like Posting Sukses"
-    }, 201
+         return {
+            "Message": "Update Gagal,Silahkan Cek Username / Password"
+            }
 
 #GET FOLLOWER FROM USER
 @app.route('/getflwr/<id>', methods=['GET'])
@@ -217,18 +317,15 @@ def get_usr():
     return jsonify(arr)
 
 #GET POSTING LIKE BY    
-@app.route('/lksby/<id>', methods=['GET'])
+@app.route('/getlksby/<id>', methods=['GET'])
 def get_likesby(id):
-    post = posting.query.filter_by(idposting=id).first()
+    a=db.engine.execute('SELECT * FROM public.lkspostby WHERE idposting='+id+'')
     arr=[]
-    arr=post.likeby
-    likeby=[]
-    # # return arr
-    for i in range(len(arr)):
-        if arr[i]!=',':
-            nicknme = user.query.filter_by(usrid=arr[i]).first()
-            likeby.append(nicknme.nickname)
-    return likeby
+    for i in a:
+        usrnick = user.query.filter_by(usrid=i[2]).first()
+        arr.append({'usrid':i[2],'NickName':usrnick.nickname})
+    
+    return jsonify(arr)
 
 #SEARCH TWEET
 @app.route('/tweetsearch', methods=['POST'])
@@ -253,3 +350,50 @@ def list_tweet(id):
 
 
     return jsonify(arr)
+
+#GET POPULAR USER
+@app.route('/popusr/', methods=['GET'])
+def get_mostpopusr():
+    a=db.engine.execute('SELECT * FROM(SELECT usrid as id,COUNT(usrid) as id_count FROM public.follower GROUP BY usrid)t ORDER BY id_count desc limit 1')
+    arr=[]
+    for i in a:
+        ncknme = user.query.filter_by(usrid=i[0]).first()
+        
+        arr.append({'usrid':i[0],'Nickname':str(ncknme.nickname)})
+    return jsonify(arr)
+
+#GET POPULAR TWEET
+@app.route('/poptweet/', methods=['GET'])
+def get_mostpoptweet():
+    a=db.engine.execute('SELECT * FROM(SELECT idposting as id,COUNT(idposting) as post_count FROM public.lkspostby GROUP BY idposting)t ORDER BY post_count desc limit 1')
+    arr=[]
+    for i in a:
+        postnme = posting.query.filter_by(idposting=i[0]).first()
+        
+        arr.append({'idposting':i[0],'IsiPost':str(postnme.isipost),'LikesCount':i[1]})
+    return jsonify(arr)
+
+#GET POPULAR TWEET
+@app.route('/ppstwit/', methods=['GET'])
+def get_mstpoptwit():
+    a=db.engine.execute('SELECT * FROM(SELECT idposting as id,COUNT(idposting) as post_count FROM public.lkspostby GROUP BY idposting)t ORDER BY post_count desc limit 1')
+    arr=[]
+    for i in a:
+        postnme = posting.query.filter_by(idposting=i[0]).first()
+        
+        arr.append({'idposting':i[0],'IsiPost':str(postnme.isipost),'LikesCount':i[1]})
+    return jsonify(arr)
+
+#GET INACTIVE USER
+@app.route('/inctveuser/', methods=['GET'])
+def get_invctveusr():
+    cekdte=db.engine.execute('SELECT * FROM public.user')
+    arr=[]
+    for i in cekdte:
+        day_off=datetime.now()-i[4]
+        if day_off.days>60:
+            arr.append({'usrid':i[0],'LastLogin':i[4]})
+    
+    return jsonify(arr)
+
+    
