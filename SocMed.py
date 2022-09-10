@@ -144,41 +144,66 @@ def create_flwr():
 #DELETE USER
 @app.route('/usrdlte/<id>', methods=['DELETE'])
 def dlte_usr(id):
-    try:
-        b=db.engine.execute('SELECT * FROM public.follower WHERE usrid='+str(id)+'AND apprvl=1')
-        for i in b:
-            flwr = follower.query.filter_by(idfollower=i[0]).first()
-            db.session.delete(flwr)
-            db.session.commit()
+    parsed = BasicAuth()
+    username = parsed[0]
+    password= parsed[1]
+    
+    cek=user.query.filter_by(usrname=username).first()
+    
+    if str(cek.usrid)==id:
 
-        c=db.engine.execute('SELECT * FROM public.follower WHERE followerid='+str(id)+'AND apprvl=1')
-        for i in c:
-            flwing= follower.query.filter_by(idfollower=i[0]).first()
-            db.session.delete(flwing)
-            db.session.commit()
+
+        try:
+            b=db.engine.execute('SELECT * FROM public.follower WHERE usrid='+str(id)+'AND apprvl=1')
+            for z in b:
+                flwr = follower.query.filter_by(idfollower=z[0]).first()
+                db.session.delete(flwr)
+                db.session.commit()
+
+            c=db.engine.execute('SELECT * FROM public.follower WHERE followerid='+str(id)+'AND apprvl=1')
+            for i in c:
+                flwing= follower.query.filter_by(idfollower=i[0]).first()
+                db.session.delete(flwing)
+                db.session.commit()
 
         #dlte likesby dan posting per user    
-        a=db.engine.execute('SELECT a.idposting,a.usrid,b.idlksby FROM public.posting as a,public.lkspostby as b WHERE b.idposting=a.idposting AND a.usrid='+str(id)+'')
-        for i in a:
+            a=db.engine.execute('SELECT a.idposting,a.usrid,b.idlksby FROM public.posting as a,public.lkspostby as b WHERE b.idposting=a.idposting AND a.usrid='+str(id)+'')
+            for j in a:
+        
+                ceklksby=lkspostby.query.filter_by(idlksby=j[2]).first()
+                db.session.delete(ceklksby)
+                db.session.commit()
+
+            e=db.engine.execute('SELECT * FROM public.lkspostby WHERE likeby='+str(id)+'')
+            for l in e:
             # return str(i[0])
             
-            ceklksby=lkspostby.query.filter_by(idlksby=i[2]).first()
-            db.session.delete(ceklksby)
+                lkbydel=lkspostby.query.filter_by(idlksby=l[0]).first()
+                db.session.delete(lkbydel)
+                db.session.commit()
+
+            d=db.engine.execute('SELECT * FROM public.posting WHERE usrid='+id+'')
+            for k in d:
+                psting = posting.query.filter_by(idposting=k[0]).first()
+                db.session.delete(psting)
+                db.session.commit()
+
+            usr = user.query.filter_by(usrid=id).first()
+            db.session.delete(usr)
             db.session.commit()
     
-
-        psting = posting.query.filter_by(usrid=id).first()
-        db.session.delete(psting)
-        db.session.commit()    
-    except:
+        except:
     
+            return {
+                "Message": "Hapus User Belum Berhasil"
+            }, 500
         return {
-            "Message": "Hapus User Belum Berhasil"
-        }, 500
-    return {
-        "Message": "Hapus User Berhasil"
-    }, 201
-
+            "Message": "Hapus User Berhasil"
+        }, 201
+    else:
+        return {
+            "Message": "User ID tidak sesuai Request Delete"
+        }, 401
 #UNLIKE POSTING
 @app.route('/unlkepost/<idpost>/<id>', methods=['DELETE'])
 def unlike_psting(idpost,id):
@@ -275,7 +300,7 @@ def update_usr(id):
     else:
          return {
             "Message": "Update Gagal,Silahkan Cek Username / Password"
-            }
+            },401
 
 #GET FOLLOWER FROM USER
 @app.route('/getflwr/<id>', methods=['GET'])
@@ -359,7 +384,7 @@ def get_mostpopusr():
     for i in a:
         ncknme = user.query.filter_by(usrid=i[0]).first()
         
-        arr.append({'usrid':i[0],'Nickname':str(ncknme.nickname)})
+        arr.append({'usrid':i[0],'Nickname':str(ncknme.nickname),'Followers':i[1]})
     return jsonify(arr)
 
 #GET POPULAR TWEET
@@ -392,7 +417,7 @@ def get_invctveusr():
     for i in cekdte:
         day_off=datetime.now()-i[4]
         if day_off.days>60:
-            arr.append({'usrid':i[0],'LastLogin':i[4]})
+            arr.append({'usrid':i[0],'LastLogin':i[4],'LamaHari':day_off.days})
     
     return jsonify(arr)
 
