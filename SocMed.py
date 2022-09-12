@@ -41,7 +41,7 @@ class posting(db.Model):
 class lkspostby(db.Model):
     idlksby=db.Column(db.Integer, primary_key=True, index=True)
     idposting=db.Column(db.Integer, db.ForeignKey('posting.idposting'), nullable=False)
-    likeby=db.Column(db.Integer, nullable=True)
+    likeby=db.Column(db.Integer, db.ForeignKey('user.usrid'), nullable=False)
 
 db.create_all()
 db.session.commit()
@@ -359,11 +359,38 @@ def search_tweet():
     data = request.get_json()
     p = posting.query.filter(posting.isipost.ilike('%' + data['Posting'] + '%')).all()
     arr=[]
-    for i in p:
-        arr.append({'idposting':i.idposting,'usrid':i.usrid,'IsiTweet':i.isipost})
+    if p:
+        for i in p:
+            arr.append({'idposting':i.idposting,'usrid':i.usrid,'IsiTweet':i.isipost})
 
+    else:
+        return {
+            "Message": "Tweet tidak ditemukan"
+            },401
+
+    
+    return jsonify(arr)
+
+#SEARCH USER
+@app.route('/usrsearch', methods=['POST'])
+def search_usr():
+	
+    data = request.get_json()
+    p = user.query.filter(user.nickname.ilike('%' + data['Nickusr'] + '%')).all()
+    arr=[]
+    if p:
+        for i in p:
+            arr.append({'usrid':i.usrid,'Nickname':i.nickname,'LastLogin':i.lastlogin})
+
+
+    else:
+        return {
+            "Message": "User tidak ditemukan"
+            },401
 
     return jsonify(arr)
+
+
 
 #GET LIST TWEET
 @app.route('/gettweet/<id>', methods=['GET'])
