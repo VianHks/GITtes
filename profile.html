@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" type="text/css" href="css/blocks/profilemid.css" />
+  <title>Twitter Profile</title>
+</head>
+<body>
+
+  <header id="main-header">
+    <div class="container">
+      <nav>
+        <ul>
+          <li onclick="home()"><img src="Imagespf/home.svg"  height="30" width="30" alt="Home">Home</li>
+          <li><img src="Imagespf/notifications.svg"  height="30" width="30" alt="Home">Notifications</li>
+          <!-- <li><img src="images/message.svg" alt="Home">Messages</li> -->
+        </ul>
+      </nav>
+      <!-- <img src="imagespf/cat1.svg"   height="40" width="50" alt="Logo"> -->
+      <div class="side">
+          <input type="text" placeholder="Search on Twitter">
+          
+      </div>
+      <nav>
+        <ul>
+          <img src="Imagespf/logout.svg" alt="Avatar" height="30" width="30">
+          <button  class ="btnlogout" style="cursor: pointer" onclick="logout()" >Logout</button>
+        </ul>
+        
+      </nav>
+       
+    </div>
+  </header>
+
+  <div class="banner">
+    <h1>Profile foto</h1>
+  </div>
+
+  <div class="bar">
+    <div class="container">
+      <ul>
+        <li class="active">
+          <span>Tweets</span>
+          <strong>345</strong>
+        </li>
+        
+        <li>
+          <span>Followings</span>
+          <strong>321</strong>
+        </li>
+        
+        <li>
+          <span>Followers</span>
+          <strong>34</strong>
+        </li>
+        
+        <li>
+          <span>Favorites</span>
+          <strong>12</strong>
+        </li>
+      </ul>
+  
+    </div>
+  </div>
+
+  <div class="wrapper-content">
+    <div class="container">
+      <aside class="profile">
+        <img src="images/avatar.png" class="avatar" alt="Gabriel de Jesus">
+        <h1>Gabriel de jesus</h1>
+        <span>devgabrieldejeuss</span>
+        <p>❤️ Simply passionate about creating and transforming interfaces!</p>
+  
+        <!-- <ul class="list">
+          <li><img src="images/place.svg" alt="Place">Rio de Janeiro, Brasil</li>
+          <li><img src="images/url.svg" alt="URL">gabrieldesenvolvedor.com</li>
+          <li><img src="images/joined.svg" alt="Joined">Joined October 2020</li>
+          <li><img src="images/born.svg" alt="Born">Born the 19th of December 1998</li>
+        </ul> -->
+        
+        <div class="widget followers">
+          <strong><img src="imagespf/followers.svg" alt="Followers"> 180 followers that you know</strong>
+          <ul>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+          </ul>
+        </div>
+
+        <!-- <div class="widget images">
+          <strong><img src="images/images.svg" alt="Images"> 266 Photos and videos</strong>
+          <ul>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+          </ul>
+        </div> -->
+
+      </aside>
+
+      <section class="timeline">
+        <nav>
+          <p href="" class="active">Tweets</p>
+          
+        </nav>
+
+        <ul class="tweets">
+        <li>
+          <div class="wrapper">
+            <div class="input-box">
+              <div class="tweet-area">
+                <span class="placeholder">What's happening?</span>
+                <div class="input editable" contenteditable="true" spellcheck="false"></div>
+                <div class="input readonly" contenteditable="true" spellcheck="false"></div>
+              </div>
+              <!-- <div class="privacy">
+                <i class="fas fa-globe-asia"></i>
+                <span>Everyone can reply</span>
+              </div> -->
+            </div>
+            <div class="bottom">
+              <ul class="icons">
+                <!-- <li><i class="uil uil-capture"></i></li> -->
+                <li><i class="far fa-file-image"></i></li>
+                <!-- <li><i class="fas fa-map-marker-alt"></i></li>
+                <li><i class="far fa-grin"></i></li>
+                <li><i class="far fa-user"></i></li> -->
+              </ul>
+              <div class="content">
+                <span class="counter">250</span>
+                <button>Tweet</button>
+              </div>
+            </div>
+          </div>
+        
+        </li>
+
+          <li>
+
+            <!-- <img src="images/avatar.png" alt="Avatar">
+            <div class="info">
+              <strong>Gabriel de Jesus <span>@botdogb</span></strong>
+              <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Mollitia, vitae doloribus eum repudiandae odio.</p>
+            
+              <div class="actions">
+                <a href=""><img src="images/comments.svg" alt="Comments"> 3</a>
+                <a href=""><img src="images/retweet.svg" alt="Retweet"> 8</a>
+                <a href=""><img src="images/like.svg" alt="Like"> 3</a>
+              </div>
+            </div>
+          </li>
+
+          <li>
+            <img src="images/avatar.png" alt="Avatar">
+            <div class="info">
+              <strong>Gabriel de Jesus <span>@botdogb</span></strong>
+              <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Mollitia, vitae doloribus eum repudiandae odio.</p>
+            
+              <div class="actions">
+                <a href=""><img src="images/comments.svg" alt="Comments"> 3</a>
+                <a href=""><img src="images/retweet.svg" alt="Retweet"> 8</a>
+                <a href=""><img src="images/like.svg" alt="Like"> 3</a>
+              </div>
+            </div>
+          </li>
+
+          <li>
+            <img src="images/avatar.png" alt="Avatar">
+            <div class="info">
+              <strong>Gabriel de Jesus <span>@botdogb</span></strong>
+              <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Mollitia, vitae doloribus eum repudiandae odio.</p>
+            
+              <div class="actions">
+                <a href=""><img src="images/comments.svg" alt="Comments"> 3</a>
+                <a href=""><img src="images/retweet.svg" alt="Retweet"> 8</a>
+                <a href=""><img src="images/like.svg" alt="Like"> 3</a>
+              </div>
+            </div>
+          </li>
+
+          <li>
+            <img src="images/avatar.png" alt="Avatar">
+            <div class="info">
+              <strong>Gabriel de Jesus <span>@botdogb</span></strong>
+              <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Mollitia, vitae doloribus eum repudiandae odio.</p>
+            
+              <div class="actions">
+                <a href=""><img src="images/comments.svg" alt="Comments"> 3</a>
+                <a href=""><img src="images/retweet.svg" alt="Retweet"> 8</a>
+                <a href=""><img src="images/like.svg" alt="Like"> 3</a>
+              </div>
+            </div>
+          </li>
+
+          <li>
+            <img src="images/avatar.png" alt="Avatar">
+            <div class="info">
+              <strong>Gabriel de Jesus <span>@botdogb</span></strong>
+              <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Mollitia, vitae doloribus eum repudiandae odio.</p>
+            
+              <div class="actions">
+                <a href=""><img src="images/comments.svg" alt="Comments"> 3</a>
+                <a href=""><img src="images/retweet.svg" alt="Retweet"> 8</a>
+                <a href=""><img src="images/like.svg" alt="Like"> 3</a>
+              </div>
+            </div>
+          </li>
+
+          <li>
+            <img src="images/avatar.png" alt="Avatar">
+            <div class="info">
+              <strong>Gabriel de Jesus <span>@botdogb</span></strong>
+              <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Mollitia, vitae doloribus eum repudiandae odio.</p>
+            
+              <div class="actions">
+                <a href=""><img src="images/comments.svg" alt="Comments"> 3</a>
+                <a href=""><img src="images/retweet.svg" alt="Retweet"> 8</a>
+                <a href=""><img src="images/like.svg" alt="Like"> 3</a>
+              </div>
+            </div>
+          </li>
+
+          <li>
+            <img src="images/avatar.png" alt="Avatar">
+            <div class="info">
+              <strong>Gabriel de Jesus <span>@botdogb</span></strong>
+              <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Mollitia, vitae doloribus eum repudiandae odio.</p>
+            
+              <div class="actions">
+                <a href=""><img src="images/comments.svg" alt="Comments"> 3</a>
+                <a href=""><img src="images/retweet.svg" alt="Retweet"> 8</a>
+                <a href=""><img src="images/like.svg" alt="Like"> 3</a>
+              </div>
+            </div>
+          </li> -->
+
+        </ul>
+      </section>
+
+      <aside class="widgets">
+        <div class="widget follow">
+          <div class="title">
+            <strong>Who to follow</strong>
+            <a href="">Refresh</a>
+            <a href="">View all</a>
+          </div>
+
+          <ul>
+            <li>
+              <div class="profile">
+                <img src="images/avatar.png" alt="Avatar">
+                <div class="info">
+                  <strong>Gabriel <span>@botdogb</span></strong>
+                  <button>Follow</button>
+                </div>
+              </div>
+              <a href="">x</a>
+            </li>
+            
+            <li>
+              <div class="profile">
+                <img src="images/avatar.png" alt="Avatar">
+                <div class="info">
+                  <strong>Gabriel <span>@botdogb</span></strong>
+                  <button>Follow</button>
+                </div>
+              </div>
+              <a href="">x</a>
+            </li>
+
+            <li>
+              <div class="profile">
+                <img src="images/avatar.png" alt="Avatar">
+                <div class="info">
+                  <strong>Gabriel <span>@botdogb</span></strong>
+                  <button>Follow</button>
+                </div>
+              </div>
+              <a href="">x</a>
+            </li>
+          </ul>
+
+        </div>
+      </aside>
+    </div>
+  </div>
+
+<script>
+  const wrapper = document.querySelector(".wrapper"),
+editableInput = wrapper.querySelector(".editable"),
+readonlyInput = wrapper.querySelector(".readonly"),
+placeholder = wrapper.querySelector(".placeholder"),
+counter = wrapper.querySelector(".counter"),
+button = wrapper.querySelector("button");
+
+editableInput.onfocus = ()=>{
+  placeholder.style.color = "#c5ccd3";
+}
+editableInput.onblur = ()=>{
+  placeholder.style.color = "#98a5b1";
+}
+
+editableInput.onkeyup = (e)=>{
+  let element = e.target;
+  validated(element);
+}
+editableInput.onkeypress = (e)=>{
+  let element = e.target;
+  validated(element);
+  placeholder.style.display = "none";
+}
+
+function validated(element){
+  let text;
+  let maxLength = 250;
+  let currentlength = element.innerText.length;
+
+  if(currentlength <= 0){
+    placeholder.style.display = "block";
+    counter.style.display = "none";
+    button.classList.remove("active");
+  }else{
+    placeholder.style.display = "none";
+    counter.style.display = "block";
+    button.classList.add("active");
+  }
+
+  counter.innerText = maxLength - currentlength;
+
+  if(currentlength > maxLength){
+    let overText = element.innerText.substr(maxLength); //extracting over texts
+    overText = `<span class="highlight">${overText}</span>`; //creating new span and passing over texts
+    text = element.innerText.substr(0, maxLength) + overText; //passing overText value in textTag variable
+    readonlyInput.style.zIndex = "1";
+    counter.style.color = "#e0245e";
+    button.classList.remove("active");
+  }else{
+    readonlyInput.style.zIndex = "-1";
+    counter.style.color = "#333";
+  }
+  readonlyInput.innerHTML = text; //replacing innerHTML of readonly div with textTag value
+}
+function logout() {
+      // let x =document.cookie;
+      // document.cookie = "UID='',expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      document.cookie = "UID=; expires=Thu, 01 jan 1970 00:00:00 UTC; path=/;";
+      
+      window.location.href = 'login.html'
+  }
+  function home(){
+    window.location.href="index.html"
+    // document.getElementById("homeid").className("sidebar-menu__item sidebar-menu__item--active");
+  }
+  </script>
+
+</script>
+</body>
+</html>

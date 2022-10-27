@@ -2,13 +2,19 @@ from itertools import count
 from select import select
 from sqlite3 import Date
 from turtle import pos
-from flask import Flask, jsonify,request
+from flask import Flask, jsonify,request,make_response
 from flask_sqlalchemy import SQLAlchemy
+from flask_cors import CORS,cross_origin
 import base64
+import jwt
+# import datetime
+import datetime as dt
 from datetime import datetime
 
 
+
 app = Flask(__name__)
+CORS(app, supports_credentials=True) 
 db = SQLAlchemy(app)
 
 # app.config['SECRET_KEY']='secret'
@@ -57,7 +63,7 @@ def BasicAuth() :
 
 
 #CREATE USER
-@app.route('/usr/', methods=['POST'])
+@app.route('/usr', methods=['POST'])
 def create_usr():
     
     data = request.get_json()
@@ -69,16 +75,24 @@ def create_usr():
     crtdate=frmtdtenow,
     stsusr="Aktif"
     )
-    try:
-        db.session.add(usr)
-        db.session.commit()
-    except:
+    cek=user.query.filter_by(usrname=data['usrname']).first()
+    
+    
+    if cek:
         return {
-            "Message": "Simpan Belum Berhasil"
+            "Message": "Simpan Belum Berhasil,Username Sudah Terpakai"
         }, 400
-    return {
-        "Message": "Simpan Data User Berhasil"
-    }, 201
+    else:
+        try:
+            db.session.add(usr)
+            db.session.commit()
+        except:
+            return {
+                "Message": "Simpan Belum Berhasil"
+            }, 400
+        return {
+            "Message": "Simpan Data User Berhasil"
+        }, 201
 
 #POSTING
 @app.route('/post/', methods=['POST'])
@@ -129,7 +143,7 @@ def create_flwr():
     flwr = follower(
     usrid=data['usrid'],
     followerid=data['followerid'],
-    apprvl = 0
+    apprvl = 1
     )
     try:
         db.session.add(flwr)
@@ -149,61 +163,64 @@ def dlte_usr(id):
     password= parsed[1]
     
     cek=user.query.filter_by(usrname=username).first()
-    
-    if str(cek.usrid)==id:
+    if cek:
+        if str(cek.usrid)==id:
 
+            try:
+                b=db.engine.execute('SELECT * FROM public.follower WHERE usrid='+str(id)+'AND apprvl=1')
+                for z in b:
+                    flwr = follower.query.filter_by(idfollower=z[0]).first()
+                    db.session.delete(flwr)
+                    db.session.commit()
 
-        try:
-            b=db.engine.execute('SELECT * FROM public.follower WHERE usrid='+str(id)+'AND apprvl=1')
-            for z in b:
-                flwr = follower.query.filter_by(idfollower=z[0]).first()
-                db.session.delete(flwr)
-                db.session.commit()
-
-            c=db.engine.execute('SELECT * FROM public.follower WHERE followerid='+str(id)+'AND apprvl=1')
-            for i in c:
-                flwing= follower.query.filter_by(idfollower=i[0]).first()
-                db.session.delete(flwing)
-                db.session.commit()
+                c=db.engine.execute('SELECT * FROM public.follower WHERE followerid='+str(id)+'AND apprvl=1')
+                for i in c:
+                    flwing= follower.query.filter_by(idfollower=i[0]).first()
+                    db.session.delete(flwing)
+                    db.session.commit()
 
         #dlte likesby dan posting per user    
-            a=db.engine.execute('SELECT a.idposting,a.usrid,b.idlksby FROM public.posting as a,public.lkspostby as b WHERE b.idposting=a.idposting AND a.usrid='+str(id)+'')
-            for j in a:
+                a=db.engine.execute('SELECT a.idposting,a.usrid,b.idlksby FROM public.posting as a,public.lkspostby as b WHERE b.idposting=a.idposting AND a.usrid='+str(id)+'')
+                for j in a:
         
-                ceklksby=lkspostby.query.filter_by(idlksby=j[2]).first()
-                db.session.delete(ceklksby)
-                db.session.commit()
+                    ceklksby=lkspostby.query.filter_by(idlksby=j[2]).first()
+                    db.session.delete(ceklksby)
+                    db.session.commit()
 
-            e=db.engine.execute('SELECT * FROM public.lkspostby WHERE likeby='+str(id)+'')
-            for l in e:
+                e=db.engine.execute('SELECT * FROM public.lkspostby WHERE likeby='+str(id)+'')
+                for l in e:
             # return str(i[0])
             
-                lkbydel=lkspostby.query.filter_by(idlksby=l[0]).first()
-                db.session.delete(lkbydel)
-                db.session.commit()
+                    lkbydel=lkspostby.query.filter_by(idlksby=l[0]).first()
+                    db.session.delete(lkbydel)
+                    db.session.commit()
 
-            d=db.engine.execute('SELECT * FROM public.posting WHERE usrid='+id+'')
-            for k in d:
-                psting = posting.query.filter_by(idposting=k[0]).first()
-                db.session.delete(psting)
-                db.session.commit()
+                d=db.engine.execute('SELECT * FROM public.posting WHERE usrid='+id+'')
+                for k in d:
+                    psting = posting.query.filter_by(idposting=k[0]).first()
+                    db.session.delete(psting)
+                    db.session.commit()
 
-            usr = user.query.filter_by(usrid=id).first()
-            db.session.delete(usr)
-            db.session.commit()
-    
-        except:
-    
+                usr = user.query.filter_by(usrid=id).first()
+                db.session.delete(usr)
+                db.session.commit()
+        
+            except:
+        
+                return {
+                    "Message": "Hapus User Belum Berhasil"
+                }, 500
             return {
-                "Message": "Hapus User Belum Berhasil"
-            }, 500
-        return {
-            "Message": "Hapus User Berhasil"
-        }, 201
+                "Message": "Hapus User Berhasil"
+            }, 201
+        else:
+            return {
+                "Message": "User ID tidak sesuai Request Delete"
+            }, 401
     else:
         return {
-            "Message": "User ID tidak sesuai Request Delete"
-        }, 401
+                "Message": "User Tidak Ditemukan"
+            }, 401
 #UNLIKE POSTING
 @app.route('/unlkepost/<idpost>/<id>', methods=['DELETE'])
 def unlike_psting(idpost,id):
@@ -308,15 +325,20 @@ def get_flwr(id):
     flwr = follower.query.filter_by(usrid=id).filter_by(apprvl=1).all()
     arr=[]
     listname=[]
-    for i in flwr:
-        # arr.append(i['followerid'])
-        arr.append(i.followerid)
-    # return arr
-    for j in arr:
-        ceknme = user.query.filter_by(usrid=j).first()
-        listname.append(ceknme.nickname)
-    
-    return listname
+    if flwr:
+        for i in flwr:
+            # arr.append(i['followerid'])
+            arr.append(i.followerid)
+        # return arr
+        for j in arr:
+            ceknme = user.query.filter_by(usrid=j).first()
+            listname.append(ceknme.nickname)
+        
+        return listname
+    else:
+        return {
+            "Message": "User Tidak Ditemukan"
+        }, 401
 
 #GET USER FOLLOWING
 @app.route('/getflwing/<id>', methods=['GET'])
@@ -441,11 +463,63 @@ def get_mstpoptwit():
 def get_invctveusr():
     cekdte=db.engine.execute('SELECT * FROM public.user')
     arr=[]
+    ksong=""
     for i in cekdte:
         day_off=datetime.now()-i[4]
         if day_off.days>60:
             arr.append({'usrid':i[0],'LastLogin':i[4],'LamaHari':day_off.days})
+            ksong="Ada"
+        else:
+            ksong=""
+    if ksong=="Ada":
+        return jsonify(arr)
     
-    return jsonify(arr)
+    else:
+        return {
+                "Message": "Saat ini Tidak ada user yang berstatus Inactive"
+            }
+@app.route('/f_login', methods=['POST'])    
+@cross_origin(origin='*',headers=['Content-Type','Authorization'], supports_credentials=True)
+def login():
+    parsed = BasicAuth()
+    idd = parsed[0]
+    pwd= parsed[1]
+    
+    
+    cek=user.query.filter_by(usrname=idd).filter_by(password=pwd).first()
+    # return cek.nickname
+    if cek:
+       
+        us = user.query.filter_by(usrname = idd).first()
+        token = jwt.encode({
+                    'user': idd,
+                    'passkey' :pwd,
+                    'exp': datetime.now()+ dt.timedelta(hours=24)
+                    },'secret' ,algorithm='HS256')
+        # response = make_response( render_template() ) 
+        resp = make_response("token generated")
+        resp.set_cookie('token',value=token,expires=datetime.now()+ dt.timedelta(hours=24), path='/',samesite='Lax',domain="127.0.0.1")
+        return {
+            "message": "token succes",
+            "token" : token
+        }
+    else:
+        return "False"        
+    # if cek:
+    
+    # if not us or pwd != us.passkey:
+    #     return "wrong credentials", 400 
+
+        
+    #     resp.set_cookie('username', value=idd,
+    # expires=datetime.now()
+    # + dt.timedelta(hours=24), path='/', samesite='Lax',)
+    
+    #     resp.set_cookie('role',value=us.role,
+    # expires=datetime.now()
+    #  + dt.timedelta(hours=24), path='/',samesite='Lax',)
+    #     return resp, 201
+    # else:
+    #     return "False"
 
     
