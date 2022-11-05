@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reporting</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+    <div class="sidebar">
+        <div class="brand">
+            
+            <i class="fa-solid fa-qrcode"></i>
+            <h1>Administrator</h1>
+        </div>
+        <ul>
+            <li><i class="fa-solid fa-gauge"></i><span>Dashboard</span></li>
+            <li><i class="fa-solid fa-user"></i><span>Data User</span></li>
+            <li><i class="fa-regular fa-comment"></i><span>Data Tweets</span></li>
+            <li><i class="fa-solid fa-user-xmark"></i><span>Inactive User</span></li>
+            <li onclick="logout()"><i class="fa-solid fa-arrow-right-from-bracket"></i><span>Logout</span></li>
+        </ul>
+
+    </div>
+<img src="" alt="">
+    <div class="container">
+        <div class="header">
+            <div class="nav">
+                <div class="search">
+                    <input type="text" placeholder="Search Data...">
+                    <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+                </div>
+                <!-- <div class="user">
+                    <a href="#" class="btn"></a>
+                    <a href="#" class="btn"></a>
+                    <a href="#" class="btn"></a>
+                    
+                </div> -->
+            </div>
+
+        </div>
+        
+        <div class="content">
+            <div class="cards">
+                <div class="card">
+                    <div class="box">
+                        <h1 id="dtusr"></h1>
+                        <h3>Data User</h3>
+                    </div>
+                    <div class="icon">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="box">
+                        <h1 id="ttlpost"></h1>
+                        <h3>Data Tweets</h3>
+                    </div>
+                    <div class="icon">
+                        <i class="fa-regular fa-comment"></i>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="box">
+                        <h1 id="inactv"></h1>
+                        <h3>Inactive User</h3>
+                    </div>
+                    <div class="icon">
+                        <i class="fa-solid fa-user-xmark"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="content-2">
+                <div class="payments">
+                    <div class="title">
+                        <h2>Most Popular Tweet</h2>
+                        <!-- <a href="#" class="btn">Search</a> -->
+                    </div>
+                    <table id="getpoptw">
+                        <tr>
+                            <th>Username</th>
+                            <th>Tweet</th>
+                            <th>Total Likes</th>
+                        </tr>
+                        
+                    </table>
+                </div>                
+                <div class="students">
+                    <div class="title">
+                        <h2>Popular User</h2>
+                        <!-- <a href="#" class="btn">Search</a> -->
+                    </div>
+                    <table id="getusr">
+                        <tr>
+                            <th>Username</th>
+                            <th>Nickname</th>
+                            <th>Followers</th>
+                            
+                        </tr>
+                        
+                           
+                        
+                        
+                    </table>
+            
+            
+            </div>
+
+            </div>
+            
+    </div>
+
+    <script>
+        function loadreport(){
+        var raw = "";
+
+        var requestOptions = {
+        method: 'GET',
+        // body: raw,
+        redirect: 'follow'
+        };
+
+        fetch("http://localhost:5000/popusr", requestOptions)
+        .then((response) => response.json())
+        .then((result) => {
+          var arr=[]
+          arr=result 
+        
+        for(let i=0;i<arr.length;i++){
+                
+          var y=`<tr>
+                <td>${arr[i].Usernme}</td>
+                <td>${arr[i].Nickname}</td>
+                <td style="text-align: center;">${arr[i].Followers}</td>                     
+            </tr>`
+          document.getElementById("getusr").innerHTML += y;
+        }  
+    })
+    //GET POP TWEET
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    var raw = "\r\n";
+
+    var requestOptions = {
+    method: 'GET',
+    headers: myHeaders,
+    // body: raw,
+    redirect: 'follow'
+    
+    };
+
+    fetch("http://localhost:5000/poptweet", requestOptions)
+        .then((response) => response.json())
+        .then((result) => { 
+          var arr=[]
+          arr=result 
+          for(let i=0;i<arr.length;i++){
+                
+                var y=` <tr>
+                            <td>${arr[i].Usernme}</td>
+                            <td>${arr[i].IsiPost}</td>
+                            <td>${arr[i].LikesCount}</td>
+                           
+                        </tr>`
+                document.getElementById("getpoptw").innerHTML += y;
+              }
+        })
+    
+        //GET INACTIVE USR
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
+        var raw = "\r\n";
+
+        var requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+        // body: raw,
+        redirect: 'follow'
+        };
+
+        fetch("http://localhost:5000/inctveuser", requestOptions)
+        .then((response) => response.text())
+        .then(data => cek(JSON.parse(data)));
+   
+    //GET TTL USER
+
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    var raw = "\r\n\r\n";
+
+    var requestOptions = {
+    method: 'GET',
+    headers: myHeaders,
+    redirect: 'follow'
+    };
+
+    fetch("http://localhost:5000/ttlusr", requestOptions)
+        .then((response) => response.json())
+        .then((result) => {
+            document.getElementById("dtusr").innerText=result.Ttlusr
+
+        })
+
+        //GET TOTAL POST/TWEET
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
+        var raw = "\r\n\r\n";
+
+        var requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+        
+        redirect: 'follow'
+        };
+
+        fetch("http://localhost:5000/ttltweet", requestOptions)
+        .then((response) => response.json())
+        .then((result) => {
+            document.getElementById("ttlpost").innerText=result.Ttlpst
+
+        })
+        
+
+    }
+function cek(json){
+    if(json.Message=="Saat ini Tidak ada user yang berstatus Inactive"){
+        document.getElementById("inactv").innerText="0"
+    }else{
+        var arr=[]
+            arr=json
+            var count=0
+            for (let i = 0; i < arr.length; i++) {
+                count+=1
+            }
+            document.getElementById("inactv").innerText=count
+    }
+
+}
+    function logout() {
+     
+      document.cookie = "UID=; expires=Thu, 01 jan 1970 00:00:00 UTC; path=/;";
+      
+      window.location.href = '/login.html'
+    }
+      loadreport()
+    </script>
+    
+</body>
+</html>

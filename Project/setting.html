@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" type="text/css" href="css/blocks/profilemid.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+	<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- <link rel="stylesheet" type="text/css" href="css/blocks/tweet.css"> -->
+  <link rel="stylesheet" type="text/css" href="css/blocks/setting.css">
+  <title>Settings</title>
+</head>
+
+<body>
+
+  <header id="main-header">
+    <div class="container">
+      <nav>
+        <ul>
+          <li style="margin-top: 10px;" class="hme" onclick="home()"><img src="Imagespf/home.svg" height="30" width="30" alt="Home">Home</li>
+          <li style="margin-top: 10px;" class="ntf"><img src="Imagespf/notifications.svg" height="30" width="30" alt="Home">Notifications</li>
+          <li style="margin-top: 10px;" class="set" onclick="profile()"><img src="svg/profile.svg" height="30" width="30" alt="Profile">Profile</li>
+          <!-- <li><img src="images/message.svg" alt="Home">Messages</li> -->
+        </ul>
+      </nav>
+      <!-- <img src="imagespf/cat1.svg"   height="40" width="50" alt="Logo"> -->
+      
+      <nav>
+        <ul>
+          <!-- <img src="svg/profile.svg" alt="Avatar" height="30" width="30"> -->
+          <button class="btnlogout" style="cursor: pointer" onclick="logout()">Logout</button>
+        </ul>
+
+      </nav>
+
+    </div>
+    
+  </header>
+  <div class="container">
+    <h1 class="mb-5">Settings</h1>
+    <div class="bg-white shadow rounded-lg d-block d-sm-flex">
+        <div class="profile-tab-nav border-right">
+            <div class="p-4">
+                <div class="img-circle text-center mb-3">
+                    <img src="images/ft2.jpeg" alt="Image" class="shadow">
+                </div>
+                <h4 id="huser" class="text-center"></h4>
+            </div>
+            <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                <a class="nav-link active" id="account-tab" data-toggle="pill" href="#account" role="tab" aria-controls="account" aria-selected="true">
+                    <i class="fa fa-home text-center mr-1"></i> 
+                    Account
+                </a>
+                <a class="nav-link" id="password-tab" data-toggle="pill" href="#password" role="tab" aria-controls="password" aria-selected="false">
+                    <i class="fa fa-key text-center mr-1"></i> 
+                    Password
+                </a>
+                
+            </div>
+        </div>
+        <div class="tab-content p-4 p-md-5" id="v-pills-tabContent">
+            <div class="tab-pane fade show active" id="account" role="tabpanel" aria-labelledby="account-tab">
+                <h3 class="mb-4">Account Settings</h3>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                              <label>Username</label>
+                              <input id="usrnm" type="text" class="form-control" value="" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label>Phone number</label>
+                        <input type="text" class="form-control" value="083821863144">
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                              <label>Nickname</label>
+                              <input id="inptnick" type="text" class="form-control" value="">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                              
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-12">
+                        <div class="form-group">
+                              <label>Bio</label>
+                            <textarea class="form-control" rows="4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore vero enim error similique quia numquam ullam corporis officia odio repellendus aperiam consequatur laudantium porro voluptatibus, itaque laboriosam veritatis voluptatum distinctio!</textarea>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <button onclick="updateacc()" id="updtprof" class="btn btn-primary">Update</button>
+                    <button id="cncelbtn" class="btn btn-light">Cancel</button>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="password" role="tabpanel" aria-labelledby="password-tab">
+                <h3 class="mb-4">Password Settings</h3>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                              <label>Old password</label>
+                              <input  id="passlama" type="password" class="form-control" value="" readonly>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                              <label>New password</label>
+                              <input id="passnew" type="password" class="form-control" onkeyup="check()" value="">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                              <label>Confirm new password</label>
+                              <input id="passnew2" type="password" class="form-control" onkeyup="check()" value="">
+                            <span id='message'></span>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <button onclick="updateacc()" class="btn btn-primary">Update</button>
+                    <button class="btn btn-light">Cancel</button>
+                </div>
+            </div>
+            
+    </div>
+</div>
+  <section class="py-5 my-5">
+    
+    
+</section>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+<script>  
+function updateacc(){
+    var usrlogin = localStorage.getItem("IdUser")
+    let nickname = document.getElementById("inptnick").value;
+
+	let pass = document.getElementById("passlama").value;
+    if (document.getElementById("passnew").value==""){
+        pass = document.getElementById("passlama").value;
+    }else{
+        pass = document.getElementById("passnew").value;
+    }
+    
+    // let phone = document.getElementById("pass").value;
+// console.log(pass)
+
+var myHeaders = new Headers();
+// myHeaders.append("Authorization", "Basic RGVzdGE6ZGVzdDEyMw==");
+myHeaders.append("Content-Type", "application/json");
+
+var raw = JSON.stringify({
+"password": pass,
+"nickname": nickname
+});
+
+var requestOptions = {
+method: 'PUT',
+headers: myHeaders,
+body: raw,
+redirect: 'follow'
+};
+
+
+  if (nickname == "" || pass == "") {
+    // A field can not be empty
+    alert("A field can not be empty.");
+  } else {
+    fetch("http://localhost:5000/updtusr/"+usrlogin, requestOptions)
+    .then((response) => response.text())
+    .then((data) => alertupdtepf(JSON.parse(data)));
+  
+  }
+}
+function alertupdtepf(json) {
+  console.log(json.Message);
+  if (json.Message == "Update data failed") {
+    alert("Update Belum Berhasil,Terjadi Kesalahan Pada Server");
+  } else {
+   
+    alert("Update Profil Berhasil");
+	
+      
+  }
+  var a=localStorage.getItem("IdUser")
+      
+  location.href="profile.html?id="+a+""
+}
+var check = function() {
+if (document.getElementById('passnew').value ==
+document.getElementById('passnew2').value) {
+document.getElementById('message').style.color = 'green';
+document.getElementById('message').innerHTML = 'matching';
+} else {
+document.getElementById('message').style.color = 'red';
+document.getElementById('message').innerHTML = 'not matching';
+}
+}
+
+function loadsetting(){
+var usrlogin = localStorage.getItem("IdUser")
+var raw = "";
+
+var requestOptions = {
+method: 'GET',
+// body: raw,
+redirect: 'follow'
+};
+
+fetch("http://localhost:5000/settusr/"+usrlogin, requestOptions)
+.then((response) => response.json())
+.then((result) => {
+      var arr = []
+      arr = result
+      console.log(arr)
+      for (let i = 0; i < arr.length; i++) {
+          document.getElementById("huser").innerText = arr[i].nick
+          document.getElementById("inptnick").value=arr[i].nick
+          document.getElementById("usrnm").value = arr[i].usrname
+          document.getElementById("passlama").value = arr[i].pass
+        }
+    })
+
+}
+function logout() {
+      // let x =document.cookie;
+      // document.cookie = "UID='',expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      document.cookie = "UID=; expires=Thu, 01 jan 1970 00:00:00 UTC; path=/;";
+
+      window.location.href = 'login.html'
+    }
+    function home() {
+      var a=localStorage.getItem("IdUser")
+      
+      location.href="index.html?id="+a+""
+      
+    }
+
+    function profile() {
+      var a=localStorage.getItem("IdUser")
+      
+      location.href="profile.html?id="+a+""
+      
+    }
+loadsetting()
+</script>
+</body>
+
+</html>

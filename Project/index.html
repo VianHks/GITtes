@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Home Neko</title>
+    <link rel="stylesheet" href="css/global.css" />
+    <link rel="stylesheet" href="css/blocks/layout.css" />
+    <link rel="stylesheet" href="css/blocks/brand.css" />
+    <link rel="stylesheet" href="css/blocks/sidebar-menu.css" />
+    <link rel="stylesheet" href="css/blocks/tweet.css" />
+    <link rel="stylesheet" href="css/blocks/trends-for-you.css" />
+    <link rel="stylesheet" href="css/blocks/who-to-follow.css" />
+    <!-- <link rel="stylesheet" href="css/blocks/profilemid.css"> -->
+  </head>
+  <body>
+    
+    <div class="layout">
+      <div class="layout__left-sidebar">
+        
+        <div class="sidebar-menu">
+          <img src="./svg/lg1.svg" class="brand" />
+          <div id="homeid" style="text-decoration: none;" onclick="home()" class="sidebar-menu__item sidebar-menu__item--active">
+            <img  src="./svg/home.svg" class="sidebar-menu__item-icon" />Home        
+          </div>
+          <div id="exploreid" onclick="explore()" style="text-decoration: none;" class="sidebar-menu__item">
+            <img src="./svg/explore.svg" class="sidebar-menu__item-icon" />Explore
+          </div>
+          <div id="profileid" onclick="profile()" style="text-decoration: none;" class="sidebar-menu__item">
+            
+            <img src="./svg/profile.svg" class="sidebar-menu__item-icon" />Profile
+            
+          </div>
+          <div onclick="logout()" id="logout" class="sidebar-menu__item">
+            <img src="Imagespf/logout.svg" class="sidebar-menu__item-icon" />Logout
+            <!-- <a ></a> -->
+           
+          </div>
+
+
+          <!-- <div class="sidebar-menu__item">
+            <img src="./svg/more.svg" class="sidebar-menu__item-icon" />
+            More
+          </div> -->
+        </div>
+      </div>
+
+      <!-- ISI TWEET  -->
+      <div id="isitweet" class="layout__main">
+        
+        
+        <div id="divklik" onclick="ceksts('1')" class="tweet">
+          <img class="tweet__author-logo" src="./images/prof-img3.jpg" />
+            <div class="tweet__main">
+              <div class="tweet__header">
+                <div class="tweet__author-name">
+                Ranti
+                </div>
+                <div class="tweet__author-slug">
+                @ranti@gmail.com
+                </div>
+              <div class="tweet__publish-time">
+                10d
+            </div>
+        </div>
+            <div class="tweet__content">
+              Malming Alun-alun lagi :(
+            </div>
+          <li class="liaction">
+            <div class="actions">
+              <a id="aklik" onclick="ceksts2('2')" href="#"><img src="svg/like.svg" alt="Like"> 0</a>
+            </div>
+          </li>
+        </div>
+      </div>
+
+        <!-- <div class="tweet">
+          
+        </div>
+         -->
+      </div>
+      
+      <div class="layout__right-sidebar-container">
+        
+        <div class="layout__right-sidebar">
+          <div id="wrap">
+            <form autocomplete="off" id="nav-search" class="form-search" action="/search" role="search">
+              <input id="search-query" class="search-input" type="text" placeholder="Search" />
+                <button class="icon" type="submit"></button>
+            </form>
+          </div>
+          <div id="trendsfu" class="trends-for-you">
+            <div class="trends-for-you__block">
+              <div class="trends-for-you__heading">
+                  Trends for you
+              </div>
+            </div>
+            
+            
+          </div>
+          <div id="whtoflw" class="who-to-follow">
+            <div class="who-to-follow__block">
+              <div class="who-to-follow__heading">
+                Who to follow
+              </div>
+            </div>
+            <!-- <div class="who-to-follow__block">
+              <img
+                class="who-to-follow__author-logo"
+                src="./images/profile-image-1.jpg"/>
+              <div class="who-to-follow__content">
+                <div>
+                  <div class="who-to-follow__author-name">
+                    Becki (& Chris)
+                  </div>
+                  <div class="who-to-follow__author-slug">
+                    @beckiandchris
+                  </div>
+                </div>
+                <div class="who-to-follow__button">
+                  Follow
+                </div>
+              </div>
+            </div>
+            <div class="who-to-follow__block">
+              <img
+                class="who-to-follow__author-logo"
+                src="./images/profile-image-2.png"
+              />
+              <div class="who-to-follow__content">
+                <div>
+                  <div class="who-to-follow__author-name">
+                    Elixir Digest
+                  </div>
+                  <div class="who-to-follow__author-slug">
+                    @elixirdigest
+                  </div>
+                </div>
+                <div class="who-to-follow__button">
+                  Follow
+                </div>
+              </div>
+            </div>
+
+            <div class="who-to-follow__block">
+              <img
+                class="who-to-follow__author-logo"
+                src="./images/profile-image-3.jpg"
+              />
+              <div class="who-to-follow__content">
+                <div>
+                  <div class="who-to-follow__author-name">
+                    Chris Martin
+                  </div>
+                  <div class="who-to-follow__author-slug">
+                    @chris_martin
+                  </div>
+                </div>
+                <div class="who-to-follow__button">
+                  Follow
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div> -->
+    </div>
+    <script>
+      var cooktw=[]
+      loadtweet()
+      
+      function logout() {
+      // let x =document.cookie;
+      // document.cookie = "UID='',expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      document.cookie = "UID=; expires=Thu, 01 jan 1970 00:00:00 UTC; path=/;";
+      
+      window.location.href = 'login.html'
+  }
+  function profile(){
+    localStorage.setItem("Page", "Profile");
+    var a=localStorage.getItem("IdUser")
+    location.href="profile.html?id="+a+""
+    // document.getElementById("profileid").className("sidebar-menu__item sidebar-menu__item--active");
+  }
+  function explore(){
+    var a=localStorage.getItem("IdUser")
+    location.href="explore.html?id="+a+""
+    // document.getElementById("exploreid").className("sidebar-menu__item sidebar-menu__item--active");
+  }
+  function home(){
+    var a=localStorage.getItem("IdUser")
+    location.href="index.html?id="+a+""
+    // document.getElementById("homeid").className("sidebar-menu__item sidebar-menu__item--active");
+  }
+
+  function loadtweet(){
+    var myHeaders = new Headers();
+    var requestOptions = {
+        method: "GET",
+        headers: myHeaders,
+        credential: "include",
+        redirect: "follow",
+      };
+    //GET DATA TWEET ALL
+    fetch("http://localhost:5000/getalltweet", requestOptions)
+        .then((response) => response.json())
+        .then((result) => {
+          var arr=[]
+          arr=result
+         
+          //Cek Likes
+          for(let i=0;i<arr.length;i++){
+            cooktw.push(arr[i].Tweet)
+
+            var myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
+
+
+            var raw = JSON.stringify({
+              idpst: arr[i].idposting,
+              idusr: arr[i].userid,              
+            });
+            // console.log(raw)
+            var requestOptions = {
+              method: "GET",
+              headers: myHeaders,
+              credential: "include",
+              redirect: "follow",
+            };
+
+            fetch("http://localhost:5000/ceklikes/" + arr[i].idposting+"/"+arr[i].userid, requestOptions)
+            .then((response) => response.text())
+            .then((data) => {if (JSON.parse(data)[0].stslikes=="Ada"){
+            
+            var x=`<div class="tweet">
+            
+                    <img class="tweeta__author-logo" src=""/>
+                <div class="tweet__main">
+                  <div class="tweet__header">
+                    <div class="tweet__author-name">
+                      ${arr[i].username}
+                      
+                    </div>
+                    <div class="tweet__author-slug">
+                      @${arr[i].nick}
+                    </div>
+                    <div class="tweet__publish-time">
+                      10d
+                    </div>
+                  </div>
+                  <div onclick="gettweetperitem(${arr[i].idposting},${arr[i].userid})" class="tweet__content">
+                    <p id="IdPost${arr[i].idposting}" hidden>${arr[i].idposting}<p/>
+                    <p id="getidusr${arr[i].userid}" hidden>${arr[i].userid}<p/>              
+                
+                    ${arr[i].Tweet}
+                  </div>
+                <div class="actions">
+                  <a id="aklik" onclick="savelikes(${arr[i].idposting},${arr[i].userid})" href="#"><img src="svg/heartnew.svg" alt="Like">${arr[i].TotalLikes}</a>
+                  <p id="getidposting${arr[i].idposting}" hidden>${arr[i].idposting}<p/>
+                
+                </div>
+              </div>`
+          
+              document.getElementById("isitweet").innerHTML += x;           
+              }else{
+
+            // console.log(JSON.parse(data)[0].stslikes)    
+            var x=`<div class="tweet">
+            
+            <img class="tweeta__author-logo" src=""/>
+        <div class="tweet__main">
+          <div class="tweet__header">
+            <div class="tweet__author-name">
+              ${arr[i].username}
+              
+            </div>
+            <div class="tweet__author-slug">
+              @${arr[i].nick}
+            </div>
+            <div class="tweet__publish-time">
+              10d
+            </div>
+          </div>
+          <div onclick="gettweetperitem(${arr[i].idposting},${arr[i].userid})" class="tweet__content">
+            <p id="IdPost${arr[i].idposting}" hidden>${arr[i].idposting}<p/>
+            <p id="getidusr${arr[i].userid}" hidden>${arr[i].userid}<p/>              
+        
+            ${arr[i].Tweet}
+          </div>
+        <div class="actions">
+          <a id="aklik" onclick="savelikes(${arr[i].idposting},${arr[i].userid})" href="#"><img src="svg/like.svg" alt="Like">${arr[i].TotalLikes}</a>
+          <p id="getidposting${arr[i].idposting}" hidden>${arr[i].idposting}<p/>
+        
+        </div>
+      </div>`
+  
+      document.getElementById("isitweet").innerHTML += x; 
+              }
+            })
+            
+            
+    
+          }})
+        
+        //GET DATA TWEET
+        
+        fetch("http://localhost:5000/ppstwitindex", requestOptions)
+        .then((response) => response.json())
+        .then((result) => {
+          var arr1=[]
+          arr1=result 
+        // console.log(arr1)
+        for(let j=0;j<arr1.length;j++){
+          let cektw=arr1[j].IsiPost
+          var splittweet=cektw.split(" ")
+          
+          var y=`<div class="trends-for-you__block">
+              <div class="trends-for-you__meta-information">
+                Trending in Your Country
+              </div>
+              <div class="trends-for-you__trend-name">
+                <a href="#">#${splittweet[0]}..</a>
+              </div>
+              <div class="trends-for-you__meta-information">
+                Total Likes ${arr1[j].LikesCount}
+              </div>
+            </div>`
+            
+            
+          // </div>
+          document.getElementById("trendsfu").innerHTML += y;
+        }})    
+           
+      //GET WHO FOLLOW
+      var myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+
+      var requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+        // body: raw,
+        redirect: 'follow'
+      };
+      var cookidusr=localStorage.getItem("IdUser")
+    fetch("http://localhost:5000/whoto/"+ cookidusr, requestOptions)
+      .then((response) => response.json())
+      .then((result) => {
+        var arr2=[]
+        arr2=result
+        // console.log(arr2)
+        for(let i=0;i<arr2.length;i++){
+          var x=`
+          <div class="who-to-follow__block">
+              <img
+                class="who-to-follow__author-logo"
+                src="./images/profile-image-1.jpg"/>
+              <div class="who-to-follow__content">
+                <div>
+                  <div class="who-to-follow__author-name">
+                    ${arr2[i].usrname}
+                  </div>
+                  <div class="who-to-follow__author-slug">
+                    ${arr2[i].nick}
+                  </div>
+                </div>
+                <div id="flowme" onclick="fllow(${arr2[i].usrid})" class="who-to-follow__button">
+                  Follow
+                </div>
+              </div>
+            </div>`
+            document.getElementById("whtoflw").innerHTML += x;
+            
+        }
+      })    
+      
+      }
+
+      
+      function savelikes(stspost,stsid){
+      
+      var myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+
+      var raw = JSON.stringify({
+        "idposting": stspost,
+        "usrid": stsid
+      });
+      console.log(stspost,stsid)
+      var requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: raw,
+        redirect: 'follow'
+      };
+      
+      fetch("http://localhost:5000/lks", requestOptions)
+        .then(response => response.text())
+        .then(data => alertlike(JSON.parse(data)));
+        
+      }
+
+      function alertlike(json) {
+      console.log(json.Message);
+      if (json.Message == "Gagal Menyukai Postingan" || json.Message=="Sudah Pernah Menyukai Postingan ini") {
+        alert("Likes Posting Belum Berhasil,Terjadi Kesalahan Pada Server / Sudah Pernah menyukai Postingan ini");
+      } else {
+        var a=localStorage.getItem("IdUser")
+        
+        alert("Menyukai Postingan Berhasil");
+        location.href="index.html?id="+a+""
+      }
+    }
+
+      function gettweetperitem(param,idusr){
+      
+        let getusrid = document.getElementById("getidusr"+idusr+"").innerText;
+        let getidpost = document.getElementById("IdPost"+param+"").innerText;
+        
+        // console.log(getusrid,getidpost)
+        var a=localStorage.getItem("IdUser")
+        var reslt =0
+
+        if(a==getusrid){
+          reslt=a
+        }else{
+          localStorage.setItem("IdPost",getidpost);
+          reslt=getusrid
+        }
+        localStorage.setItem("Page", "Tweet");
+        localStorage.setItem("ProfId", reslt);
+        location.href="profile.html?id="+reslt+""
+        // console.log(idpost)
+    //    
+  }
+  // function ceksts(pindah){
+  //   document.getElementById("aklik").setAttribute("onclick","")
+  //   console.log(pindah)
+  // }
+  // function ceksts2(like){
+  //   document.getElementById("divklik").setAttribute("onclick","")
+  //   console.log(like)
+
+  // }
+
+  // <div id="wrap">
+  //           <form autocomplete="off" id="nav-search" class="form-search" action="/search" role="search">
+  //             <input id="search-query" class="search-input" type="text" placeholder="Search" />
+  //               <button class="icon" type="submit"></button>
+  //           </form>
+  //         </div>
+  function autocomplete(inp, arr) {
+  /*the autocomplete function takes two arguments,
+  the text field element and an array of possible autocompleted values:*/
+  var currentFocus;
+  /*execute a function when someone writes in the text field:*/
+  inp.addEventListener("input", function(e) {
+      var a, b, i, val = this.value;
+      /*close any already open lists of autocompleted values*/
+      closeAllLists();
+      if (!val) { return false;}
+      currentFocus = -1;
+      /*create a DIV element that will contain the items (values):*/
+      a = document.createElement("DIV");
+      a.setAttribute("id", this.id + "autocomplete-list");
+      a.setAttribute("class", "autocomplete-items");
+      /*append the DIV element as a child of the autocomplete container:*/
+      this.parentNode.appendChild(a);
+      /*for each item in the array...*/
+      for (i = 0; i < arr.length; i++) {
+        /*check if the item starts with the same letters as the text field value:*/
+        if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+          /*create a DIV element for each matching element:*/
+          b = document.createElement("DIV");
+          /*make the matching letters bold:*/
+          b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
+          b.innerHTML += arr[i].substr(val.length);
+          /*insert a input field that will hold the current array item's value:*/
+          b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+          /*execute a function when someone clicks on the item value (DIV element):*/
+              b.addEventListener("click", function(e) {
+              /*insert the value for the autocomplete text field:*/
+              inp.value = this.getElementsByTagName("input")[0].value;
+              /*close the list of autocompleted values,
+              (or any other open lists of autocompleted values:*/
+              closeAllLists();
+          });
+          a.appendChild(b);
+        }
+      }
+  });
+  /*execute a function presses a key on the keyboard:*/
+  inp.addEventListener("keydown", function(e) {
+      var x = document.getElementById(this.id + "autocomplete-list");
+      if (x) x = x.getElementsByTagName("div");
+      if (e.keyCode == 40) {
+        /*If the arrow DOWN key is pressed,
+        increase the currentFocus variable:*/
+        currentFocus++;
+        /*and and make the current item more visible:*/
+        addActive(x);
+      } else if (e.keyCode == 38) { //up
+        /*If the arrow UP key is pressed,
+        decrease the currentFocus variable:*/
+        currentFocus--;
+        /*and and make the current item more visible:*/
+        addActive(x);
+      } else if (e.keyCode == 13) {
+        /*If the ENTER key is pressed, prevent the form from being submitted,*/
+        e.preventDefault();
+        if (currentFocus > -1) {
+          /*and simulate a click on the "active" item:*/
+          if (x) x[currentFocus].click();
+          
+        }
+      }
+  });
+  function addActive(x) {
+    /*a function to classify an item as "active":*/
+    if (!x) return false;
+    /*start by removing the "active" class on all items:*/
+    removeActive(x);
+    if (currentFocus >= x.length) currentFocus = 0;
+    if (currentFocus < 0) currentFocus = (x.length - 1);
+    /*add class "autocomplete-active":*/
+    x[currentFocus].classList.add("autocomplete-active");
+  }
+  function removeActive(x) {
+    /*a function to remove the "active" class from all autocomplete items:*/
+    for (var i = 0; i < x.length; i++) {
+      x[i].classList.remove("autocomplete-active");
+    }
+ 
+  }
+  function closeAllLists(elmnt) {
+    /*close all autocomplete lists in the document,
+    except the one passed as an argument:*/
+    var x = document.getElementsByClassName("autocomplete-items");
+    for (var i = 0; i < x.length; i++) {
+      if (elmnt != x[i] && elmnt != inp) {
+      x[i].parentNode.removeChild(x[i]);
+    }
+    getsearch()
+  }
+}
+/*execute a function when someone clicks in the document:*/
+document.addEventListener("click", function (e) {
+    closeAllLists(e.target);
+    
+});
+}
+
+function getsearch(){
+  var twsearch=document.getElementById("search-query").value
+  console.log(twsearch)
+  var myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+
+  var raw = JSON.stringify({
+    "Posting": twsearch
+  });
+
+var requestOptions = {
+  method: 'POST',
+  headers: myHeaders,
+  body: raw,
+  redirect: 'follow'
+};
+
+fetch("http://localhost:5000/tweetsearch", requestOptions)
+  .then((response) => response.text())
+  .then((data) => {gettweetperitem(JSON.parse(data)[0].idposting,JSON.parse(data)[0].usrid)
+
+
+  
+  
+})
+ 
+  // .catch(error => console.log('error', error));
+}
+function fllow(usrtoflow){
+    //  var idusr=localStorage.getItem("ProfId")
+     var flwid=localStorage.getItem("IdUser")
+
+  
+      var myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+
+      var raw = JSON.stringify({
+        "usrid": usrtoflow,
+        "followerid": flwid
+      });
+
+      var requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: raw,
+        redirect: 'follow'
+      };
+
+    fetch("http://localhost:5000/flwr", requestOptions)
+      .then(response => response.text())
+      .then(data => alertflow(JSON.parse(data)));
+}
+function alertflow(json){
+    // var txtbtn = document.getElementById("btnflow").innerText
+    if (json.Message == "Gagal Mengikuti") {
+        alert("Follow Belum Berhasil,Terjadi Kesalahan Pada Server");
+        
+    }else{
+      var a=localStorage.getItem("IdUser")
+        
+      alert("Berhasil Follow");
+      location.href="index.html?id="+a+""
+    }
+  
+  }
+    </script>
+    <script>
+     
+      autocomplete(document.getElementById("search-query"), cooktw); 
+    </script>
+  </body>
+</html>

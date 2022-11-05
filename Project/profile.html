@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" type="text/css" href="css/blocks/profilemid.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+  <link rel="stylesheet" type="text/css" href="css/blocks/tweet.css">
+  <title>Profile</title>
+</head>
+
+<body>
+
+  <header id="main-header">
+    <div class="container">
+      <nav>
+        <ul>
+          <li onclick="home()"><img src="Imagespf/home.svg" height="30" width="30" alt="Home">Home</li>
+          <li><img src="Imagespf/notifications.svg" height="30" width="30" alt="Home">Notifications</li>
+          <li onclick="setting()"><img src="svg/setting.svg" height="30" width="30" alt="Settings">Settings</li>
+          <!-- <li><img src="images/message.svg" alt="Home">Messages</li> -->
+        </ul>
+      </nav>
+      <!-- <img src="imagespf/cat1.svg"   height="40" width="50" alt="Logo"> -->
+      <div class="side">
+        <input type="text" placeholder="Search on Twitter">
+
+      </div>
+      <nav>
+        <ul>
+          <!-- <img src="svg/profile.svg" alt="Avatar" height="30" width="30"> -->
+          <button class="btnlogout" style="cursor: pointer" onclick="logout()">Logout</button>
+        </ul>
+
+      </nav>
+
+    </div>
+  </header>
+
+  <div class="banner">
+    <h1>Profile foto</h1>
+
+  </div>
+
+  <div class="bar">
+    <div class="container">
+
+      <ul>
+        <li>
+          <!-- <span>Followings</span>
+          <strong id="fwling"></strong> -->
+        </li>
+        <li class="active">
+          <span>Tweets</span>
+          <strong id="countweet"></strong>
+        </li>
+
+        <li>
+          <span>Followings</span>
+          <strong id="fwling"></strong>
+        </li>
+
+        <li>
+          <span>Followers</span>
+          <strong id="flwr"></strong>
+        </li>
+
+        <li>
+          <!-- <span>Favorites</span>
+          <strong>12</strong> -->
+        </li>
+
+        <button id="btninpttweet" class="btntweet">
+          <i class="fa-regular fa-pen-to-square"></i>
+          Tweets
+        </button>
+        <button onclick="fllow()" type="button" id="btnflow" class="btntweet">
+          <!-- <i class="fa-regular fa-pen-to-square"></i> -->
+          Follow
+        </button>
+
+
+      </ul>
+
+    </div>
+  </div>
+
+  <div class="wrapper-content">
+    <div class="container">
+      <aside class="profile">
+
+        <div>
+
+          <img id="ftopf" class="avatar" src="images/ft2.jpeg" alt="Gabriel de Jesus">
+
+          <button class="btncamera">
+            <i class="fa-solid fa-camera"></i>
+          </button>
+          <!-- <img src="image.jpg" id="photo"> -->
+
+        </div>
+        <div>
+
+        </div>
+        <h1 id="nmaidtweet">Johan</h1>
+        <span id="spangmail">johan@gmail.com</span>
+        <p>❤️ Simply passionate about creating and transforming interfaces!</p>
+
+        <!-- <ul class="list">
+          <li><img src="images/place.svg" alt="Place">Rio de Janeiro, Brasil</li>
+          <li><img src="images/url.svg" alt="URL">gabrieldesenvolvedor.com</li>
+          <li><img src="images/joined.svg" alt="Joined">Joined October 2020</li>
+          <li><img src="images/born.svg" alt="Born">Born the 19th of December 1998</li>
+        </ul> -->
+
+        <div class="widget followers">
+          <strong><img src="imagespf/followers.svg" alt="Followers"> 180 followers that you know</strong>
+          <ul>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+          </ul>
+        </div>
+
+        <!-- <div class="widget images">
+          <strong><img src="images/images.svg" alt="Images"> 266 Photos and videos</strong>
+          <ul>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+          </ul>
+        </div> -->
+
+      </aside>
+
+      <section class="timeline">
+        <nav>
+          <p href="" class="active">Tweets</p>
+
+        </nav>
+        <div id="wrptweet" class="wrapper">
+          <div class="input-box">
+            <span class="close">&times;</span>
+            <div class="tweet-area">
+              <span class="placeholder">What's happening?</span>
+              <div id="inputweet" class="input editable" contenteditable="true" spellcheck="false"></div>
+
+              <div class="input readonly" contenteditable="true" spellcheck="false"></div>
+            </div>
+          </div>
+          <div class="bottom">
+            <ul class="icons">
+
+              <li><i class="far fa-file-image"></i></li>
+
+            </ul>
+            <div class="content">
+              <span class="counter">250</span>
+              <button onclick="inputtweet()">Tweet</button>
+            </div>
+          </div>
+        </div>
+        
+        <ul id="formtweet" class="tweets">
+          
+        </ul>
+
+
+
+
+        
+          <!-- <li id="lsttweet">
+            <div class="tweet">
+            <img id="imgdom" class="tweet__author-logo" src="images/prof-img1.jpg" />
+            <div id="div1dom" class="tweet__main">
+              <div id="div2dom" class="tweet__header">
+                <div id="div3dom" class="tweet__author-name">
+                  Rian
+                </div>
+                <div id="divslug" class="tweet__author-slug">
+                  @rian@gmail.com
+                </div>
+                <div id="divtime" class="tweet__publish-time">
+                  38m
+                </div>
+              </div>
+              <div id="divisitweet" class="tweet__content">
+                
+              </div>
+            </div>
+            </div>
+          </li> -->
+
+        <!-- <ul id="input-tweet"> -->
+        <!-- <li id="lsttweet">
+            <div class="tweet">
+            <img id="imgdom" class="tweet__author-logo" src="http://127.0.0.1:5501/images/ft2.jpeg" />
+            <div id="div1dom" class="tweet__main">
+              <div id="div2dom" class="tweet__header">
+                <div id="div3dom" class="tweet__author-name">
+                  
+                </div>
+                <div id="divslug" class="tweet__author-slug">
+                  @rian@gmail.com
+                </div>
+                <div id="divtime" class="tweet__publish-time">
+                  38m
+                </div>
+              </div>
+              <div id="divisitweet" class="tweet__content">
+                Thank you
+              </div>
+            </div>
+            </div>
+          </li> -->
+        <!-- </ul> -->
+      </section>
+
+      <aside class="widgets">
+        <div class="widget follow">
+          <div class="title">
+            <strong>Who to follow</strong>
+            <a href="">Refresh</a>
+            <a href="">View all</a>
+          </div>
+
+          <ul>
+            <li>
+              <div class="profile">
+                <img src="images/avatar.png" alt="Avatar">
+                <div class="info">
+                  <strong>Gabriel <span>@botdogb</span></strong>
+                  <button>Follow</button>
+                </div>
+              </div>
+              <a href="">x</a>
+            </li>
+
+            <li>
+              <div class="profile">
+                <img src="images/avatar.png" alt="Avatar">
+                <div class="info">
+                  <strong>Gabriel <span>@botdogb</span></strong>
+                  <button>Follow</button>
+                </div>
+              </div>
+              <a href="">x</a>
+            </li>
+
+            <li>
+              <div class="profile">
+                <img src="images/avatar.png" alt="Avatar">
+                <div class="info">
+                  <strong>Gabriel <span>@botdogb</span></strong>
+                  <button>Follow</button>
+                </div>
+              </div>
+              <a href="">x</a>
+            </li>
+          </ul>
+
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <script>
+    function setinput() {
+      const wrapper = document.querySelector(".wrapper"),
+        editableInput = wrapper.querySelector(".editable"),
+        readonlyInput = wrapper.querySelector(".readonly"),
+        placeholder = wrapper.querySelector(".placeholder"),
+        counter = wrapper.querySelector(".counter"),
+        button = wrapper.querySelector("button");
+
+      editableInput.onfocus = () => {
+        placeholder.style.color = "#c5ccd3";
+      }
+      editableInput.onblur = () => {
+        placeholder.style.color = "#98a5b1";
+      }
+
+      editableInput.onkeyup = (e) => {
+        let element = e.target;
+        validated(element);
+      }
+      editableInput.onkeypress = (e) => {
+        let element = e.target;
+        validated(element);
+        placeholder.style.display = "none";
+      }
+
+      function validated(element) {
+        let text;
+        let maxLength = 250;
+        let currentlength = element.innerText.length;
+
+        if (currentlength <= 0) {
+          placeholder.style.display = "block";
+          counter.style.display = "none";
+          button.classList.remove("active");
+        } else {
+          placeholder.style.display = "none";
+          counter.style.display = "block";
+          button.classList.add("active");
+        }
+
+        counter.innerText = maxLength - currentlength;
+
+        if (currentlength > maxLength) {
+          let overText = element.innerText.substr(maxLength); //extracting over texts
+          overText = `<span class="highlight">${overText}</span>`; //creating new span and passing over texts
+          text = element.innerText.substr(0, maxLength) + overText; //passing overText value in textTag variable
+          readonlyInput.style.zIndex = "1";
+          counter.style.color = "#e0245e";
+          button.classList.remove("active");
+        } else {
+          readonlyInput.style.zIndex = "-1";
+          counter.style.color = "#333";
+        }
+        readonlyInput.innerHTML = text; //replacing innerHTML of readonly div with textTag value
+      }
+
+    }
+
+    function logout() {
+      // let x =document.cookie;
+      // document.cookie = "UID='',expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      document.cookie = "UID=; expires=Thu, 01 jan 1970 00:00:00 UTC; path=/;";
+
+      window.location.href = 'login.html'
+    }
+    function home() {
+      var a=localStorage.getItem("IdUser")
+      
+      location.href="index.html?id="+a+""
+      
+    }
+
+    function setting() {
+      var a=localStorage.getItem("IdUser")
+      
+      location.href="setting.html?id="+a+""
+      
+    }
+
+    const img = document.querySelector('#photo');
+    function chngeft() {
+      //this refers to file
+      const choosedFile = this.files[0];
+
+      if (choosedFile) {
+
+        const reader = new FileReader(); //FileReader is a predefined function of JS
+
+        reader.addEventListener('load', function () {
+          img.setAttribute('src', reader.result);
+        });
+
+        reader.readAsDataURL(choosedFile);
+
+
+      }
+    };
+    function inputtweet() {
+      let usrid = localStorage.getItem("IdUser")
+      // let username = document.getElementById("usrname").value;
+      // let password = document.getElementById("pass").value;
+
+      var inputstatus = document.getElementById("inputweet").innerText;
+      var imgtw = document.getElementById("ftopf").src;
+
+      var arr = []
+
+      var modal = document.getElementById("wrptweet");
+      var nmaid = document.getElementById("nmaidtweet").innerHTML;
+      var idspan = document.getElementById("spangmail").innerHTML;
+
+      var myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+
+      var raw = JSON.stringify({
+        "usrid": usrid,
+        "isipost": inputstatus
+      });
+
+      var requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: raw,
+        redirect: 'follow'
+      };
+      if (inputstatus== "") {
+        // A field can not be empty
+        alert("A field can not be empty.");
+      } else {
+        fetch("http://localhost:5000/post", requestOptions)
+        .then(response => response.text())
+        .then(data => alertposting(JSON.parse(data)));
+      }
+      // <li>
+      //     <img src="images/avatar.png" alt="Avatar">
+      //     <div class="info">
+      //       <strong>Gabriel de Jesus <span>@botdogb</span></strong>
+      //       <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Mollitia, vitae doloribus eum repudiandae odio.</p>
+          
+      //       <div class="actions">
+      //         <a href=""><img src="images/comments.svg" alt="Comments"> 3</a>
+      //         <a href=""><img src="images/retweet.svg" alt="Retweet"> 8</a>
+      //         <a href=""><img src="images/like.svg" alt="Like"> 3</a>
+      //       </div>
+      //     </div>
+      //   </li>
+      var x = `<li>
+            <img src="${imgtw}" alt="Avatar">
+            <div class="info">
+              <strong>${nmaid} <span>${idspan}</span> <span>10m</span> </strong>             
+              <p>${inputstatus}</p>
+            
+              <div class="actions">
+                <a href=""><img src="svg/like.svg" alt="Like"> 3</a>
+              </div>
+            </div>
+          </li>`
+     
+      document.getElementById("formtweet").innerHTML += x;      // arr = []
+      modal.style.display = "none";
+
+    }
+
+    function alertposting(json) {
+      console.log(json.Message);
+      if (json.Message == "Posting Belum Berhasil") {
+        alert("Posting Belum Berhasil,Terjadi Kesalahan Pada Server");
+      } else {
+       
+        alert("Posting Berhasil");
+      }
+    }
+
+
+
+    function gettweetperuser() {
+      var myHeaders = new Headers();
+      var requestOptions = {
+        method: "GET",
+        headers: myHeaders,
+        credential: "include",
+        redirect: "follow",
+      };
+      //GET DATA TWEET ALL
+      fetch("http://localhost:5000/getalltweet", requestOptions)
+        .then((response) => response.json())
+        .then((result) => {
+          var arr = []
+          arr = result
+        })
+
+    }
+    function loadprofile() {
+      var usrlogin = localStorage.getItem("IdUser")
+      var usrtweet = localStorage.getItem("ProfId")
+      var btninputtw = document.getElementById("btninpttweet");
+      var btnfollow=document.getElementById("btnflow");
+      var stsfolowing=""
+
+      var imgtw = document.getElementById("ftopf").src;
+      var idpost = localStorage.getItem("IdPost")
+      var myHeaders = new Headers();
+      var requestOptions = {
+        method: "GET",
+        headers: myHeaders,
+        credential: "include",
+        redirect: "follow",
+      };
+      // console.log(usrlogin,usrtweet)
+      var getinfopage=localStorage.getItem("Page");
+      
+      if (getinfopage=="Profile"){
+        // console.log(getinfopage)
+        btninputtw.style.display = "block"
+        btnfollow.style.display="none"
+        fetch("http://localhost:5000/getusrbyid/" + usrlogin, requestOptions)
+          .then((response) => response.json())
+          .then((result) => {
+            var arr = []
+            arr = result
+
+            for (let i = 0; i < arr.length; i++) {
+              document.getElementById("nmaidtweet").innerText = arr[i].Nickname
+              document.getElementById("spangmail").innerText = arr[i].usrname
+            }
+            var nmaid = document.getElementById("nmaidtweet").innerHTML;
+            var idspan = document.getElementById("spangmail").innerText;
+            //GET TWEET
+        fetch("http://localhost:5000/gettweet/" + usrlogin, requestOptions)
+          .then((response) => response.json())
+          .then((result) => {
+            var arr = []
+            arr = result
+            var count = 0
+
+            for (let i = 0; i < arr.length; i++) {
+              // console.log(arr[i].Tweet)
+              var x = `<li>
+            <img src="${imgtw}" alt="Avatar">
+            <div class="info">
+              <strong>${nmaid} <span>${idspan}</span> <span>10m</span> </strong>
+                                         
+              <p>${arr[i].Tweet}</p>
+              <p id="getidpost${arr[i].idposting}" hidden>${arr[i].idposting}<p/>
+              <div class="actions">
+                
+                <a id="aklik" onclick="savelikes(${arr[i].idposting})" href="#"><img src="svg/like.svg" alt="Like">${arr[i].TtlLikes}</a>
+                <a id="aklik" onclick="dltepost(${arr[i].idposting})" href="#"><img src="svg/trash.svg" alt="Like"></a>
+                <p id="getidposting${arr[i].idposting}" hidden>${arr[i].idposting}<p/>
+
+                
+               
+              </div>
+              
+            </div>
+          </li>`
+          
+              count += 1
+              document.getElementById("formtweet").innerHTML += x;
+            }
+            document.getElementById("countweet").innerText = count
+          })
+
+          })
+
+        
+
+        
+          //GET FOLLOWER
+      fetch("http://localhost:5000/getflwr/" + usrlogin, requestOptions)
+        .then((response) => response.json())
+        .then((result) => {
+          var arr = []
+          arr = result
+          var count = 0
+          for (let i = 0; i < arr.length; i++) {
+            count += 1
+          }
+          document.getElementById("flwr").innerText = count
+        })
+      //GET FLWING
+      fetch("http://localhost:5000/getflwing/" + usrlogin, requestOptions)
+        .then((response) => response.json())
+        .then((result) => {
+          var arr = []
+          arr = result
+          var count = 0
+          for (let i = 0; i < arr.length; i++) {
+            count += 1
+          }
+          document.getElementById("fwling").innerText = count
+        })
+      
+        
+      }else{
+        if (usrlogin == usrtweet) {
+        btninputtw.style.display = "block"
+        btnfollow.style.display="none"
+        fetch("http://localhost:5000/getusrbyid/" + usrlogin, requestOptions)
+          .then((response) => response.json())
+          .then((result) => {
+            var arr = []
+            arr = result
+
+            for (let i = 0; i < arr.length; i++) {
+              document.getElementById("nmaidtweet").innerText = arr[i].Nickname
+              document.getElementById("spangmail").innerText = arr[i].usrname
+            }
+            var nmaid = document.getElementById("nmaidtweet").innerHTML;
+            var idspan = document.getElementById("spangmail").innerText;
+            //GET TWEET
+        fetch("http://localhost:5000/gettweet/" + usrlogin, requestOptions)
+          .then((response) => response.json())
+          .then((result) => {
+            var arr = []
+            arr = result
+            var count = 0
+
+            for (let i = 0; i < arr.length; i++) {
+              // console.log(arr[i].Tweet)
+              var x = `<li>
+            <img src="${imgtw}" alt="Avatar">
+            <div class="info">
+              <strong>${nmaid} <span>${idspan}</span> <span>10m</span> </strong>
+                                         
+              <p>${arr[i].Tweet}</p>
+              <p id="getidpost${arr[i].idposting}" hidden>${arr[i].idposting}<p/>
+              <div class="actions">
+                <a href=""><img src="svg/like.svg" alt="Like">${arr[i].TtlLikes}</a>
+              </div>
+              
+            </div>
+          </li>`
+              count += 1
+              document.getElementById("formtweet").innerHTML += x;
+            }
+            document.getElementById("countweet").innerText = count
+          })
+
+          })
+
+        
+
+        
+          //GET FOLLOWER
+      fetch("http://localhost:5000/getflwr/" + usrlogin, requestOptions)
+        .then((response) => response.json())
+        .then((result) => {
+          var arr = []
+          arr = result
+          var count = 0
+          for (let i = 0; i < arr.length; i++) {
+            count += 1
+          }
+          document.getElementById("flwr").innerText = count
+        })
+      //GET FLWING
+      fetch("http://localhost:5000/getflwing/" + usrlogin, requestOptions)
+        .then((response) => response.json())
+        .then((result) => {
+          var arr = []
+          arr = result
+          var count = 0
+          for (let i = 0; i < arr.length; i++) {
+            count += 1
+          }
+          document.getElementById("fwling").innerText = count
+        })
+      } else 
+      //JIKA MASUK K PROFILE ORANG
+      {
+        btninputtw.style.display = "none"
+        btnfollow.style.display="block"
+        //GET DATA USER
+        fetch("http://localhost:5000/getusrbyid/" + usrtweet, requestOptions)
+          .then((response) => response.json())
+          .then((result) => {
+            var arr = []
+            arr = result
+
+            for (let i = 0; i < arr.length; i++) {
+              document.getElementById("nmaidtweet").innerText = arr[i].Nickname
+              document.getElementById("spangmail").innerText = arr[i].usrname
+            }
+            var nmaid = document.getElementById("nmaidtweet").innerHTML;
+            var idspan = document.getElementById("spangmail").innerHTML;
+
+        fetch("http://localhost:5000/gettweet/" + usrtweet, requestOptions)
+          .then((response) => response.json())
+          .then((result) => {
+            var arr = []
+            arr = result
+            var count = 0
+
+            for (let i = 0; i < arr.length; i++) {
+              // console.log(arr[i].Tweet)
+              var x = `<li>
+            <img src="${imgtw}" alt="Avatar">
+            <div class="info">
+              <strong>${nmaid} <span>${idspan}</span> <span>10m</span> </strong>
+                                         
+              <p>${arr[i].Tweet}</p>
+              <p id="getidpost${arr[i].idposting}" hidden>${arr[i].idposting}<p/>
+              <div class="actions">
+                <a href=""><img src="svg/like.svg" alt="Like">${arr[i].TtlLikes}</a>
+              </div>
+            </div>
+          </li>`
+              count += 1
+              document.getElementById("formtweet").innerHTML += x;
+            }
+            document.getElementById("countweet").innerText = count
+          })
+          })
+
+        
+          //GET FOLLOWER
+      fetch("http://localhost:5000/getflwr/" + usrtweet, requestOptions)
+        .then((response) => response.json())
+        .then((result) => {
+          var arr = []
+          arr = result
+          var count = 0
+          for (let i = 0; i < arr.length; i++) {
+            count += 1
+            
+            if(usrlogin==arr[i]){
+              stsfolowing="Ada"
+              
+          }
+          }
+          if(stsfolowing=="Ada"){
+            document.getElementById("btnflow").innerText="Unfollow"
+            document.getElementById("btnflow").style.backgroundColor="#dddddd" 
+            // document.getElementById("btnflow").style.cursor="default"  
+            // document.getElementById("btnflow").disabled=true;
+          }else{
+            document.getElementById("btnflow").innerText="Follow"
+            document.getElementById("btnflow").style.backgroundColor="#3BB9E3" 
+            // document.getElementById("btnflow").style.cursor="pointer"  
+            // document.getElementById("btnflow").disabled=false;
+          }
+          document.getElementById("flwr").innerText = count
+        })
+      //GET FLWING
+      fetch("http://localhost:5000/getflwing/" + usrtweet, requestOptions)
+        .then((response) => response.json())
+        .then((result) => {
+          var arr = []
+          arr = result
+          var count = 0
+          for (let i = 0; i < arr.length; i++) {
+            count += 1
+            
+          }
+          
+          document.getElementById("fwling").innerText = count
+          
+        })
+      }
+        
+      }
+      
+      
+    }
+      
+
+    // Get the modal
+    var modal = document.getElementById("wrptweet");
+
+    // Get the button that opens the modal
+    var btn = document.getElementById("btninpttweet");
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks the button, open the modal 
+    btn.onclick = function () {
+      modal.style.display = "block";
+
+    }
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function () {
+
+      modal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function (event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    }
+
+    function dltepost(postid){
+      var myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+
+      // var raw = "\r\n";
+
+      var requestOptions = {
+        method: 'DELETE',
+        headers: myHeaders,
+        // body: raw,
+        redirect: 'follow'
+      };
+
+      fetch("http://localhost:5000/postdel/"+postid, requestOptions)
+        .then((response) => response.text())
+        .then((data) => alertdelpost(JSON.parse(data)));
+        
+
+
+    }
+    function alertdelpost(json){
+      if (json.Message == "Gagal Hapus Postingan") {
+        alert("Hapus Postingan Belum Berhasil,Err :Kesalahan Pada Server")
+      }else if(json.Message == "Hapus Belum Berhasil,Data Postingan Tidak Ditemukan"){
+        alert("Hapus Postingan Belum Berhasil,Err :Data Postinga Pada Server,tidak ditemukan")
+      }else{
+        var a=localStorage.getItem("IdUser")
+        alert("Hapus Postingan Berhasil")
+        location.href="profile.html?id="+a+""
+      }
+
+    }
+
+    function fllow(){
+     let ceksts=document.getElementById("btnflow").innerText
+     var idusr=localStorage.getItem("ProfId")
+     var flwid=localStorage.getItem("IdUser")
+
+     console.log(ceksts)
+    if(ceksts=="Follow"){
+      var myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+
+      var raw = JSON.stringify({
+        "usrid": idusr,
+        "followerid": flwid
+      });
+
+      var requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: raw,
+        redirect: 'follow'
+      };
+
+    fetch("http://localhost:5000/flwr", requestOptions)
+      .then(response => response.text())
+      .then(data => alertflow(JSON.parse(data)));
+          
+    //UNFOLLOW
+    }else{
+      var myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+
+      var raw = JSON.stringify({
+        "usrid": idusr,
+        "followerid": flwid
+      });
+
+      var requestOptions = {
+        method: 'DELETE',
+        headers: myHeaders,
+        body: raw,
+        redirect: 'follow'
+      };
+
+    fetch("http://localhost:5000/fldlte", requestOptions)
+    .then(response => response.text())
+    .then(data => alertflow(JSON.parse(data)));
+    } 
+     
+    
+    }
+function alertflow(json){
+    var txtbtn = document.getElementById("btnflow").innerText
+    if(txtbtn=="Follow"){
+      if (json.Message == "Gagal Mengikuti") {
+        alert("Follow Belum Berhasil,Terjadi Kesalahan Pada Server");
+      } else {
+        var a=localStorage.getItem("IdUser")
+        
+        alert("Berhasil Follow");
+        
+      }
+    }else{
+      if (json.Message == "Gagal Unfollow") {
+        alert("UnFollow Belum Berhasil,Terjadi Kesalahan Pada Server");
+      } else {
+        var a=localStorage.getItem("IdUser")
+        
+        alert("Berhasil UnFollow");
+        
+      }
+    }
+    location.href="profile.html?id="+a+""
+}
+    loadprofile()
+    setinput()
+
+  </script>
+
+  </script>
+</body>
+
+</html>

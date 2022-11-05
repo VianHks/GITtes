@@ -1,0 +1,425 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="login.css">
+  
+  <title>Login</title>
+  <style>
+    .form {
+      opacity: 0.8;
+      /* position: absolute; */
+      /* top: 50%;
+      left: 50%; */
+      /* transform: translate(-50%, -50%); */
+      margin-top: 20px;
+      margin-left: 70px;
+      width: 400px;
+      height: 270px;
+      padding: 10;
+    }
+
+    .form .form-header {
+      height: 30px;
+      display: flex;
+      align-items: center;
+      text-align: center;
+    }
+
+    .form .form-header>div {
+      width: calc(100% / 3);
+      color: #ddd;
+      font-size: 18px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .form.signup .form-header div.show-signup {
+      color: #1da1f2;
+    }
+
+    .form.signin .form-header div.show-signin {
+      color: #1da1f2;
+    }
+
+    .form.reset .form-header div.show-reset {
+      color: #1da1f2;
+    }
+
+    .form .form-elements {
+      margin-top: 15px;
+    }
+
+    .form .form-elements .form-element {
+      height: 50px;
+      opacity: 1;
+      overflow: hidden;
+      transition: all 500ms ease-in-out;
+    }
+
+    .form .form-elements input {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      margin: 5px 0px;
+      border-radius: 10px;
+      box-sizing: border-box;
+      border: 1px solid #222;
+      background: #f5f5f5;
+    }
+
+    .form .form-elements button {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      font-weight: 600;
+      margin-top: 5px;
+      border-radius: 10px;
+      background: #1da1f2;
+      color: #f5f5f5;
+      cursor: pointer;
+      border: none;
+      outline: none;
+    }
+
+    .form .arrow {
+      position: absolute;
+      top: 51px;
+      width: 0;
+      height: 0;
+      border-left: 10px solid transparent;
+      border-right: 10px solid transparent;
+      border-bottom: 10px solid #f5f5f5;
+    }
+
+    .form.signup .arrow {
+      left: calc(calc(100% / 3) / 2);
+    }
+
+    .form.signin .arrow {
+      left: calc(calc(100% / 3) + calc(calc(100% / 3) / 2.2));
+    }
+
+    .form.reset .arrow {
+      left: calc(calc(calc(100% / 3) * 2) + calc(calc(100% / 3) / 3));
+    }
+
+    .form.signin .form-elements>div:nth-child(3) {
+      height: 0px;
+      opacity: 0;
+    }
+
+    .form.reset .form-elements>div:nth-child(2),
+    .form.reset .form-elements>div:nth-child(3) {
+      height: 0px;
+      opacity: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div  class="image">
+      <svg  viewBox="0 0 24 24" aria-hidden="true" class="big-bird">
+        <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 224.803 224.803" style="enable-background:new 0 0 224.803 224.803;" xml:space="preserve">
+<path d="M171.465,68.035L150.628,88.34v62.066l-2.997,1.232c-5.308-21.694-16.464-46.5-31.152-60.77
+	c13.916-8.419,23.281-23.698,23.281-41.116c0-2.927-0.257-5.788-0.761-8.572L146.737,0l-34.065,6.524
+	c-6.321-3.068-13.408-4.792-20.893-4.792c-7.485,0-14.573,1.724-20.894,4.792L36.815,0l7.728,41.182
+	c-0.504,2.783-0.781,5.645-0.781,8.571c0,17.418,9.323,32.697,23.239,41.116c-20.735,20.145-34.603,61.294-34.603,85.03
+	c0,30.165,22.755,48.904,59.384,48.904c33.794,0,55.596-15.959,58.797-42.116l30.05-11.77v-69.992l11.777-11.486L171.465,68.035z"/>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+
+
+      </svg>
+    </div>
+
+    <div  class="content">
+      <svg viewBox="0 0 24 24" aria-hidden="true" class="small-bird">
+        <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+        viewBox="0 0 224.803 224.803" style="enable-background:new 0 0 224.803 224.803;" xml:space="preserve">
+   <path d="M171.465,68.035L150.628,88.34v62.066l-2.997,1.232c-5.308-21.694-16.464-46.5-31.152-60.77
+       c13.916-8.419,23.281-23.698,23.281-41.116c0-2.927-0.257-5.788-0.761-8.572L146.737,0l-34.065,6.524
+       c-6.321-3.068-13.408-4.792-20.893-4.792c-7.485,0-14.573,1.724-20.894,4.792L36.815,0l7.728,41.182
+       c-0.504,2.783-0.781,5.645-0.781,8.571c0,17.418,9.323,32.697,23.239,41.116c-20.735,20.145-34.603,61.294-34.603,85.03
+       c0,30.165,22.755,48.904,59.384,48.904c33.794,0,55.596-15.959,58.797-42.116l30.05-11.77v-69.992l11.777-11.486L171.465,68.035z"/>
+   <g>
+   </g>
+   <g>
+   </g>
+   <g>
+   </g>
+   <g>
+   </g>
+   <g>
+   </g>
+   <g>
+   </g>
+   <g>
+   </g>
+   <g>
+   </g>
+   <g>
+   </g>
+   <g>
+   </g>
+   <g>
+   </g>
+   <g>
+   </g>
+   <g>
+   </g>
+   <g>
+   </g>
+   <g>
+   </g>
+
+   
+      </svg>
+
+      <h1>Happening now</h1>
+      <h3>Join Nekopoi today.</h3>
+
+      <div class="form signup">
+        <div class="form-header">
+          <div class="show-signup">Sign Up</div>
+          <div class="show-signin">Sign In</div>
+          <div class="show-reset">Reset</div>
+        </div>
+        <div class="arrow"></div>
+        <div class="form-elements">
+          <div class="form-element">
+            <input class="fuser" id="usrname" type="text" placeholder="Username" />
+          </div>
+          <div class="form-element">
+            <input id="pass" type="password" placeholder="Password" />
+          </div>
+          <div class="form-element">
+            <input id="nick" type="text" placeholder="Nickname" />
+          </div>
+          <div class="form-element">
+            <button onclick="signUp()" id="submit-btn">Sign Up</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <nav>
+       
+      </nav>
+    </div>
+  </div>
+  <script src="https://smtpjs.com/v3/smtp.js"></script>
+  <script>
+    function resetClass(element, classname) {
+      element.classList.remove(classname);
+    }
+    document
+      .getElementsByClassName("show-signup")[0]
+      .addEventListener("click", function () {
+        let form = document.getElementsByClassName("form")[0];
+        resetClass(form, "signin");
+        resetClass(form, "reset");
+        form.classList.add("signup");
+        document
+          .getElementById("submit-btn")
+          .setAttribute("onclick", "signUp()");
+        document.getElementById("submit-btn").innerText = "Sign Up";
+      });
+
+    document
+      .getElementsByClassName("show-signin")[0]
+      .addEventListener("click", function () {
+        let form = document.getElementsByClassName("form")[0];
+        resetClass(form, "signup");
+        resetClass(form, "reset");
+        form.classList.add("signin");
+        document.getElementById("submit-btn").setAttribute("onclick", "login()");
+        document.getElementById("submit-btn").innerText = "Sign In";
+      });
+
+    document
+      .getElementsByClassName("show-reset")[0]
+      .addEventListener("click", function () {
+        let form = document.getElementsByClassName("form")[0];
+        resetClass(form, "signup");
+        resetClass(form, "signin");
+        form.classList.add("reset");
+        document
+          .getElementById("submit-btn")
+          .setAttribute("onclick", "respass()");
+        document.getElementById("submit-btn").innerText = "Reset password";
+      });
+
+    function signUp() {
+      let namesignup = document.getElementById("nick").value;
+      let username = document.getElementById("usrname").value;
+      let password = document.getElementById("pass").value;
+
+      var myHeaders = new Headers();
+      myHeaders.append("Authorization", "Basic YW5kcm86MTIzNDU2Nzg=");
+      myHeaders.append("Content-Type", "application/json");
+
+      var raw = JSON.stringify({
+        usrname: username,
+        password: password,
+        nickname: namesignup,
+      });
+
+      var requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: raw,
+        // redirect: 'follow'
+      };
+
+      // Password validation
+      // Password length at least 8 characters
+      if (username == "" || password == "" || namesignup == "") {
+        // A field can not be empty
+        alert("A field can not be empty.");
+      } else {
+        fetch("http://127.0.0.1:5000/usr", requestOptions)
+          .then((response) => response.text())
+          .then((data) => alertsignup(JSON.parse(data)));
+        
+        // .then(data => (data != "False") ? alert("Successfully create an account.") :
+        //             alert("Failed create a new account because the username was taken. Try again with another username."))
+        // .catch(alert("Username has been used in another account."));
+        // alert("Successfully create an account for you.")
+      }
+    }
+    function alertsignup(json) {
+      console.log(json.Message);
+      if (json.Message == "Simpan Belum Berhasil,Username Sudah Terpakai") {
+        alert("Username Sudah Terpakai");
+      } else {
+        document.getElementById("usrname").value = "";
+        document.getElementById("pass").value = "";
+        document.getElementById("nick").value = "";
+        alert("SignUp Berhasil");
+      }
+    }
+    function login() {
+      let username = document.getElementById("usrname").value;
+      let password = document.getElementById("pass").value;
+      // console.log(username, password);
+
+
+      var myHeaders = new Headers();
+      myHeaders.append(
+        "Authorization",
+        "Basic " + btoa(username + ":" + password)
+      );
+      // myHeaders.append("Access-Control-Request-Headers", "*")
+      var raw = "";
+
+      var requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        credential: "include",
+        redirect: "follow",
+      };
+
+      fetch("http://localhost:5000/f_login", requestOptions)
+        .then((response) => response.text())
+        .then((data) => alertlogin(JSON.parse(data)));
+        
+
+    }
+    function alertlogin(json) {
+      console.log(json.message);
+      if (json.message == "Err") {
+        alert("Username / Password Salah");
+        document.getElementById("usrname").value = "";
+        document.getElementById("pass").value = "";
+        document.getElementById("nick").value = "";
+       
+      } else {
+        setcookies("UID",json.token,1)
+
+        localStorage.setItem("IdUser", json.id);
+        var cek =localStorage.getItem("IdUser")
+        
+        indexid()
+        
+        
+        
+        
+      }
+    }
+
+    function respass() {
+      var newpass = generatePassword();
+      var sento = document.getElementById("usrname").value;
+      let tes = sento.toString();
+      // console.log(`'${sento}'`)
+      // console.log(sento)
+      Email.send({
+        SecureToken: "060b8ec8-3d31-4bc4-a529-8935a5bbfe5d ",
+        To: tes,
+        From: "sarvianrukie@gmail.com",
+        Subject: "Tes Reset Pass",
+        Body: "Password baru anda :" + newpass,
+      }).then((message) => alert(message));
+    }
+    function generatePassword() {
+      var length = 8,
+        charset =
+          "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",
+        retVal = "";
+      for (var i = 0, n = charset.length; i < length; ++i) {
+        retVal += charset.charAt(Math.floor(Math.random() * n));
+      }
+      return retVal;
+    }
+    function setcookies(cName, cValue, expDays) {
+      let date = new Date();
+      date.setTime(date.getTime() + expDays * 24 * 60 * 60 * 1000);
+      const expires = "expires=" + date.toUTCString();
+      document.cookie = cName + "=" + cValue + ";" + expires + ";path=/";
+    }
+    function indexid(){
+      var a=localStorage.getItem("IdUser")
+      let username = document.getElementById("usrname").value
+      if(username=="ADMIN"){
+        location.href="Template Admin/index.html?id="+a+""
+      }else{
+        location.href="index.html?id="+a+""
+      }
+      
+    }
+   
+  </script>
+</body>
+</html>
